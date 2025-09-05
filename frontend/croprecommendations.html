@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Eco-Farm Manager - Crop Recommendations</title>
+	<link rel="stylesheet" href="dashboard.css">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+	<div class="dashboard-container">
+		<aside class="sidebar">
+			<div class="logo">
+				<h2><i class="fas fa-leaf"></i> Eco-Farm</h2>
+			</div>
+			<nav class="menu">
+				<ul>
+					<li><a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+					<li class="active"><a href="croprecommendations.html"><i class="fas fa-seedling"></i> Crop Recommendations</a></li>
+					<li><a href="fertilizeradvice.html"><i class="fas fa-flask"></i> Fertilizer Advice</a></li>
+					<li><a href="yieldrecords.html"><i class="fas fa-chart-line"></i> Yield Records</a></li>
+					<li><a href="chatbot.html"><i class="fas fa-robot"></i> Chatbot</a></li>
+					<li><a href="faq.html"><i class="fas fa-question-circle"></i> FAQs</a></li>
+					<li><a href="knowledgebase.html"><i class="fas fa-book"></i> Knowledge Base</a></li>
+					<li><a href="alerts.html"><i class="fas fa-bell"></i> Alerts</a></li>
+					<li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+					<li><a href="#" id="logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+				</ul>
+			</nav>
+		</aside>
+
+		<main class="main-content">
+			<header class="top-bar">
+				<div class="search-box">
+					<input type="text" placeholder="Search crops...">
+					<i class="fas fa-search"></i>
+				</div>
+				<div class="user-info">
+					<img src="https://ui-avatars.com/api/?name=Farmer+User&background=4caf50&color=fff" alt="User">
+					<span>Welcome, Farmer!</span>
+				</div>
+			</header>
+
+			<div class="content">
+				<div class="welcome-banner">
+					<h1>Crop Recommendations</h1>
+					<p>Get the best crop suggestions based on your soil and climate conditions.</p>
+				</div>
+
+				<div class="content-grid">
+					<div class="card crop-form-card">
+						<h2><i class="fas fa-seedling"></i> Find Suitable Crops</h2>
+						<form id="cropForm">
+							<div class="form-group">
+								<label for="soilType">Soil Type:</label>
+								<select id="soilType">
+									<option value="clay">Clay</option>
+									<option value="sandy">Sandy</option>
+									<option value="loamy">Loamy</option>
+									<option value="silty">Silty</option>
+								</select>
+							</div>
+							<div class="form-group">
+								<label for="temperature">Temperature (°C):</label>
+								<input type="number" id="temperature" value="28">
+							</div>
+							<div class="form-group">
+								<label for="rainfall">Rainfall (mm):</label>
+								<input type="number" id="rainfall" value="120">
+							</div>
+							<button type="submit" class="btn btn-primary">Get Recommendations</button>
+						</form>
+					</div>
+
+					<div class="card recommendations-card">
+						<h2><i class="fas fa-list"></i> Recommended Crops</h2>
+						<div class="recommendations-content">
+							<p>Enter your details to see crop recommendations here.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</main>
+	</div>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			const cropForm = document.getElementById('cropForm');
+			const recommendationsContent = document.querySelector('.recommendations-content');
+
+			cropForm.addEventListener('submit', function(e) {
+				e.preventDefault();
+				const soilType = document.getElementById('soilType').value;
+				const temperature = parseInt(document.getElementById('temperature').value, 10);
+				const rainfall = parseInt(document.getElementById('rainfall').value, 10);
+
+				// Simulated recommendations logic
+				let crops = [];
+				if (soilType === 'loamy' && temperature >= 20 && temperature <= 30 && rainfall >= 100 && rainfall <= 200) {
+					crops = ['Wheat', 'Maize', 'Barley'];
+				} else if (soilType === 'clay' && temperature >= 25 && rainfall >= 150) {
+					crops = ['Rice', 'Sugarcane'];
+				} else if (soilType === 'sandy' && temperature >= 22 && rainfall < 100) {
+					crops = ['Millet', 'Groundnut'];
+				} else {
+					crops = ['Check with your local extension officer for best options.'];
+				}
+
+				recommendationsContent.innerHTML = `<ul>${crops.map(crop => `<li>${crop}</li>`).join('')}</ul>`;
+			});
+		});
+	</script>
+</body>
+</html>

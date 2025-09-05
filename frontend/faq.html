@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eco-Farm Manager - FAQs</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="logo">
+                <h2><i class="fas fa-leaf"></i> Eco-Farm</h2>
+            </div>
+            <nav class="menu">
+                <ul>
+                    <li><a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="#"><i class="fas fa-seedling"></i> Crop Recommendations</a></li>
+                    <li><a href="#"><i class="fas fa-flask"></i> Fertilizer Advice</a></li>
+                    <li><a href="yieldrecords.html"><i class="fas fa-chart-line"></i> Yield Records</a></li>
+                    <li><a href="chatbot.html"><i class="fas fa-robot"></i> Chatbot</a></li>
+                    <li><a href="knowledgebase.html"><i class="fas fa-book"></i> Knowledge Base</a></li>
+                    <li><a href="alerts.html"><i class="fas fa-bell"></i> Alerts</a></li>
+                    <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+                    <li class="active"><a href="#"><i class="fas fa-question-circle"></i> FAQs</a></li>
+                    <li><a href="#" id="logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-bar">
+                <div class="search-box">
+                    <input type="text" placeholder="Search FAQs..." id="faqSearch">
+                    <i class="fas fa-search"></i>
+                </div>
+                <div class="user-info">
+                    <img src="https://ui-avatars.com/api/?name=Farmer+User&background=4caf50&color=fff" alt="User">
+                    <span>Welcome, Farmer!</span>
+                </div>
+            </header>
+
+            <div class="content">
+                <div class="welcome-banner">
+                    <h1>Frequently Asked Questions</h1>
+                    <p>Find quick answers to common queries about farming and the platform.</p>
+                </div>
+
+                <div class="card faqs-container">
+                    <h2><i class="fas fa-question-circle"></i> General Questions</h2>
+                    <div class="faq-list">
+                        <div class="faq-item">
+                            <h4>How can I get a crop recommendation?</h4>
+                            <p>You can get a personalized crop recommendation by navigating to the "Crop Recommendations" section on your dashboard and entering your soil type, temperature, and rainfall data.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h4>Is the fertilizer advice accurate?</h4>
+                            <p>Our fertilizer advice is based on data-driven insights and agricultural best practices. For best results, we recommend a physical soil test to supplement our recommendations.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h4>What types of alerts will I receive?</h4>
+                            <p>You will receive real-time alerts for critical events such as weather changes, pest and disease outbreaks, and market price trends for your registered crops.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h4>How do I contact an agricultural expert?</h4>
+                            <p>The chatbot can provide immediate assistance. For more detailed queries, you can use our feedback form to send a message, and an expert will get back to you.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h4>Can I access the platform on my mobile phone?</h4>
+                            <p>Yes, the Eco-Farm Manager is a web-based platform designed to be fully responsive and accessible on all mobile devices.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="dashboard.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const faqSearch = document.getElementById('faqSearch');
+            faqSearch.addEventListener('input', function() {
+                const searchValue = faqSearch.value.toLowerCase();
+                const faqItems = document.querySelectorAll('.faq-item');
+
+                faqItems.forEach(item => {
+                    const question = item.querySelector('h4').textContent.toLowerCase();
+                    const answer = item.querySelector('p').textContent.toLowerCase();
+
+                    if (question.includes(searchValue) || answer.includes(searchValue)) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

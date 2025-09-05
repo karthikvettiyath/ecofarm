@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eco-Farm Manager - Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+    <body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="logo">
+                <h2><i class="fas fa-leaf"></i> Eco-Farm</h2>
+            </div>
+            <nav class="menu">
+                <ul>
+                    <li class="active"><a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="croprecommendations.html"><i class="fas fa-seedling"></i> Crop Recommendations</a></li>
+                    <li><a href="fertilizeradvice.html"><i class="fas fa-flask"></i> Fertilizer Advice</a></li>
+                    <li><a href="yieldrecords.html"><i class="fas fa-chart-line"></i> Yield Records</a></li>
+                    <li><a href="chatbot.html"><i class="fas fa-robot"></i> Chatbot</a></li>
+                    <li><a href="faq.html"><i class="fas fa-question-circle"></i> FAQs</a></li>
+                    <li><a href="alerts.html"><i class="fas fa-bell"></i> Alerts</a></li>
+                    <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+                    <li><a href="#" id="logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-bar">
+                <div class="search-box">
+                    <input type="text" placeholder="Search...">
+                    <i class="fas fa-search"></i>
+                </div>
+                <div class="user-info">
+                    <img src="https://ui-avatars.com/api/?name=Farmer+User&background=4caf50&color=fff" alt="User">
+                    <span>Welcome, Farmer!</span>
+                </div>
+            </header>
+
+            <div class="content">
+                <div class="welcome-banner">
+                    <h1>Welcome to Eco-Farm Manager</h1>
+                    <p>Your smart agriculture monitoring system</p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-seedling"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>5</h3>
+                            <p>Crop Recommendations</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-flask"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>8</h3>
+                            <p>Fertilizer Advices</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>12</h3>
+                            <p>Yield Records</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>3</h3>
+                            <p>New Alerts</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-grid">
+                    <div class="card">
+                        <h2><i class="fas fa-seedling"></i> Crop Recommendation</h2>
+                        <div class="form-group">
+                            <label for="soilType">Soil Type:</label>
+                            <select id="soilType">
+                                <option value="clay">Clay</option>
+                                <option value="sandy">Sandy</option>
+                                <option value="loamy">Loamy</option>
+                                <option value="silty">Silty</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="temperature">Temperature (°C):</label>
+                            <input type="number" id="temperature" value="28">
+                        </div>
+                        <div class="form-group">
+                            <label for="rainfall">Rainfall (mm):</label>
+                            <input type="number" id="rainfall" value="120">
+                        </div>
+                        <button class="btn btn-primary">Get Recommendation</button>
+                    </div>
+
+                    <div class="card">
+                        <h2><i class="fas fa-flask"></i> Fertilizer Recommendation</h2>
+                        <div class="form-group">
+                            <label for="cropType">Crop Type:</label>
+                            <select id="cropType">
+                                <option value="wheat">Wheat</option>
+                                <option value="rice">Rice</option>
+                                <option value="corn">Corn</option>
+                                <option value="sugarcane">Sugarcane</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="soilTypeFert">Soil Type:</label>
+                            <select id="soilTypeFert">
+                                <option value="clay">Clay</option>
+                                <option value="sandy">Sandy</option>
+                                <option value="loamy">Loamy</option>
+                                <option value="silty">Silty</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-primary">Get Fertilizer Advice</button>
+                    </div>
+
+                    <div class="card">
+                        <h2><i class="fas fa-robot"></i> Agricultural Chatbot</h2>
+                        <div class="chat-container">
+                            <div class="chat-messages">
+                                <div class="message bot">
+                                    <p>Hello! How can I help with your farming questions today?</p>
+                                </div>
+                            </div>
+                            <div class="chat-input">
+                                <input type="text" placeholder="Ask a question...">
+                                <button><i class="fas fa-paper-plane"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h2><i class="fas fa-bell"></i> Recent Alerts</h2>
+                        <div class="alerts-list">
+                            <div class="alert-item">
+                                <div class="alert-icon">
+                                    <i class="fas fa-cloud-rain"></i>
+                                </div>
+                                <div class="alert-content">
+                                    <h4>Rainfall Alert</h4>
+                                    <p>Heavy rainfall expected in your area in next 48 hours.</p>
+                                    <span class="alert-time">2 hours ago</span>
+                                </div>
+                            </div>
+                            <div class="alert-item">
+                                <div class="alert-icon">
+                                    <i class="fas fa-bug"></i>
+                                </div>
+                                <div class="alert-content">
+                                    <h4>Pest Warning</h4>
+                                    <p>Increased locust activity reported in your region.</p>
+                                    <span class="alert-time">1 day ago</span>
+                                </div>
+                            </div>
+                            <div class="alert-item">
+                                <div class="alert-icon">
+                                    <i class="fas fa-seedling"></i>
+                                </div>
+                                <div class="alert-content">
+                                    <h4>Planting Season</h4>
+                                    <p>Optimal time for planting wheat is approaching.</p>
+                                    <span class="alert-time">3 days ago</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>

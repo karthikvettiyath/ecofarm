@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eco-Farm Manager - Fertilizer Advice</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="logo">
+                <h2><i class="fas fa-leaf"></i> Eco-Farm</h2>
+            </div>
+            <nav class="menu">
+                <ul>
+                    <li><a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="croprecommendations.html"><i class="fas fa-seedling"></i> Crop Recommendations</a></li>
+                    <li class="active"><a href="#"><i class="fas fa-flask"></i> Fertilizer Advice</a></li>
+                    <li><a href="yieldrecords.html"><i class="fas fa-chart-line"></i> Yield Records</a></li>
+                    <li><a href="chatbot.html"><i class="fas fa-robot"></i> Chatbot</a></li>
+                    <li><a href="knowledgebase.html"><i class="fas fa-book"></i> Knowledge Base</a></li>
+                    <li><a href="alerts.html"><i class="fas fa-bell"></i> Alerts</a></li>
+                    <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+                    <li><a href="#" id="logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-bar">
+                <div class="search-box">
+                    <input type="text" placeholder="Search..." id="searchBox">
+                    <i class="fas fa-search"></i>
+                </div>
+                <div class="user-info">
+                    <img src="https://ui-avatars.com/api/?name=Farmer+User&background=4caf50&color=fff" alt="User">
+                    <span>Welcome, Farmer!</span>
+                </div>
+            </header>
+
+            <div class="content">
+                <div class="welcome-banner">
+                    <h1>Personalized Fertilizer Advice</h1>
+                    <p>Get data-driven fertilizer recommendations for your crops and soil.</p>
+                </div>
+
+                <div class="content-grid">
+                    <div class="card fertilizer-form-card">
+                        <h2><i class="fas fa-flask"></i> Get Your Advice</h2>
+                        <form id="fertilizerForm">
+                            <div class="form-group">
+                                <label for="cropTypeFert">Crop Type:</label>
+                                <select id="cropTypeFert">
+                                    <option value="wheat">Wheat</option>
+                                    <option value="rice">Rice</option>
+                                    <option value="corn">Corn</option>
+                                    <option value="sugarcane">Sugarcane</option>
+                                    <option value="tomato">Tomato</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="soilTypeFert">Soil Type:</label>
+                                <select id="soilTypeFert">
+                                    <option value="clay">Clay</option>
+                                    <option value="sandy">Sandy</option>
+                                    <option value="loamy">Loamy</option>
+                                    <option value="silty">Silty</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Get Fertilizer Advice</button>
+                        </form>
+                    </div>
+
+                    <div class="card advice-display-card">
+                        <h2><i class="fas fa-seedling"></i> Your Recommendation</h2>
+                        <div class="advice-content">
+                            <p>Enter your details to receive a personalized fertilizer recommendation based on your inputs. Recommendations will appear here.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="dashboard.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const fertilizerForm = document.getElementById('fertilizerForm');
+            const adviceDisplay = document.querySelector('.advice-content');
+
+            fertilizerForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const cropType = document.getElementById('cropTypeFert').value;
+                const soilType = document.getElementById('soilTypeFert').value;
+
+                // For a full-stack app, this would be a POST request to the backend.
+                // Example using simulated data:
+                let recommendation = '';
+                if (cropType === 'wheat' && soilType === 'loamy') {
+                    recommendation = 'For wheat in loamy soil, use a balanced NPK fertilizer (e.g., 10-10-10) with an additional nitrogen application during the tillering stage.';
+                } else if (cropType === 'rice' && soilType === 'clay') {
+                    recommendation = 'For rice in clay soil, a nitrogen-rich fertilizer is recommended. Apply in two splits: one at planting and another during the active vegetative phase.';
+                } else if (cropType === 'corn' && soilType === 'sandy') {
+                    recommendation = 'For corn in sandy soil, apply nitrogen fertilizer in multiple small doses to prevent leaching. A fertilizer with a higher P and K ratio is also beneficial.';
+                } else {
+                    recommendation = `Based on your selection of ${cropType} and ${soilType} soil, a general-purpose NPK fertilizer with a balanced ratio is advised.`;
+                }
+
+                adviceDisplay.innerHTML = `<p><strong>Recommendation:</strong> ${recommendation}</p>`;
+            });
+        });
+    </script>
+</body>
+</html>

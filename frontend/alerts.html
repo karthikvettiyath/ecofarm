@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eco-Farm Manager - Alerts</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="logo">
+                <h2><i class="fas fa-leaf"></i> Eco-Farm</h2>
+            </div>
+            <nav class="menu">
+                <ul>
+                    <li><a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="#"><i class="fas fa-seedling"></i> Crop Recommendations</a></li>
+                    <li><a href="#"><i class="fas fa-flask"></i> Fertilizer Advice</a></li>
+                    <li><a href="yieldrecords.html"><i class="fas fa-chart-line"></i> Yield Records</a></li>
+                    <li><a href="#"><i class="fas fa-robot"></i> Chatbot</a></li>
+                    <li><a href="knowledgebase.html"><i class="fas fa-book"></i> Knowledge Base</a></li>
+                    <li class="active"><a href="#"><i class="fas fa-bell"></i> Alerts</a></li>
+                    <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+                    <li><a href="#" id="logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-bar">
+                <div class="search-box">
+                    <input type="text" placeholder="Search alerts...">
+                    <i class="fas fa-search"></i>
+                </div>
+                <div class="user-info">
+                    <img src="https://ui-avatars.com/api/?name=Farmer+User&background=4caf50&color=fff" alt="User">
+                    <span>Welcome, Farmer!</span>
+                </div>
+            </header>
+
+            <div class="content">
+                <div class="welcome-banner">
+                    <h1>Real-Time Alerts</h1>
+                    <p>Stay informed with critical weather, pest, and market advisories.</p>
+                </div>
+
+                <div class="card full-height-card">
+                    <h2><i class="fas fa-bell"></i> All Alerts</h2>
+                    <div class="alerts-list">
+                        <div class="alert-item">
+                            <div class="alert-icon">
+                                <i class="fas fa-cloud-rain"></i>
+                            </div>
+                            <div class="alert-content">
+                                <h4>Rainfall Alert</h4>
+                                <p>Heavy rainfall expected in your area in the next 48 hours. Secure your harvest.</p>
+                                <span class="alert-time">2 hours ago</span>
+                            </div>
+                        </div>
+                        <div class="alert-item">
+                            <div class="alert-icon">
+                                <i class="fas fa-bug"></i>
+                            </div>
+                            <div class="alert-content">
+                                <h4>Pest Warning</h4>
+                                <p>Increased locust activity reported in your region. Consider preventive measures.</p>
+                                <span class="alert-time">1 day ago</span>
+                            </div>
+                        </div>
+                        <div class="alert-item">
+                            <div class="alert-icon">
+                                <i class="fas fa-seedling"></i>
+                            </div>
+                            <div class="alert-content">
+                                <h4>Planting Season</h4>
+                                <p>Optimal time for planting wheat is approaching. Prepare your fields now.</p>
+                                <span class="alert-time">3 days ago</span>
+                            </div>
+                        </div>
+                        <div class="alert-item">
+                            <div class="alert-icon">
+                                <i class="fas fa-cloud-sun-rain"></i>
+                            </div>
+                            <div class="alert-content">
+                                <h4>Weather Advisory</h4>
+                                <p>Sudden temperature drop expected. Protect vulnerable crops from cold stress.</p>
+                                <span class="alert-time">4 days ago</span>
+                            </div>
+                        </div>
+                         <div class="alert-item">
+                            <div class="alert-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="alert-content">
+                                <h4>Market Trend Alert</h4>
+                                <p>Prices for tomatoes are rising. Consider selling your stock now for higher profit.</p>
+                                <span class="alert-time">5 days ago</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>

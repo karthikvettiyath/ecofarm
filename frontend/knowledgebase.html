@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eco-Farm Manager - Knowledge Base</title>
+    <link rel="stylesheet" href="dashboard.css">
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+    <body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="logo">
+                <h2><i class="fas fa-leaf"></i> Eco-Farm</h2>
+            </div>
+            <nav class="menu">
+                <ul>
+                    <li><a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="croprecommendations.html"><i class="fas fa-seedling"></i> Crop Recommendations</a></li>
+                    <li><a href="fertilizeradvice.html"><i class="fas fa-flask"></i> Fertilizer Advice</a></li>
+                    <li><a href="yieldrecords.html"><i class="fas fa-chart-line"></i> Yield Records</a></li>
+                    <li><a href="chatbot.html"><i class="fas fa-robot"></i> Chatbot</a></li>
+                    <li class="active"><a href="#"><i class="fas fa-book"></i> Knowledge Base</a></li>
+                    <li><a href="alerts.html"><i class="fas fa-bell"></i> Alerts</a></li>
+                    <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+                    <li><a href="#" id="logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-bar">
+                <div class="search-box">
+                    <input type="text" placeholder="Search knowledge base...">
+                    <i class="fas fa-search"></i>
+                </div>
+                <div class="user-info">
+                    <img src="https://ui-avatars.com/api/?name=Farmer+User&background=4caf50&color=fff" alt="User">
+                    <span>Welcome, Farmer!</span>
+                </div>
+            </header>
+
+            <div class="content">
+                <div class="welcome-banner">
+                    <h1>Knowledge Base & Guides</h1>
+                    <p>Access a comprehensive library of farming best practices and guides.</p>
+                </div>
+
+                <div class="knowledge-grid">
+                    <div class="guide-card">
+                        <div class="guide-icon"><i class="fas fa-water"></i></div>
+                        <div class="guide-info">
+                            <h4>Water Management in Monsoon</h4>
+                            <p>Tips for efficient irrigation and drainage during heavy rainfall seasons.</p>
+                            <a href="#" class="btn btn-primary">Read Guide</a>
+                        </div>
+                    </div>
+                    <div class="guide-card">
+                        <div class="guide-icon"><i class="fas fa-bug"></i></div>
+                        <div class="guide-info">
+                            <h4>Identifying Common Pests</h4>
+                            <p>A visual guide to identifying common pests and natural control methods.</p>
+                            <a href="#" class="btn btn-primary">Read Guide</a>
+                        </div>
+                    </div>
+                    <div class="guide-card">
+                        <div class="guide-icon"><i class="fas fa-seedling"></i></div>
+                        <div class="guide-info">
+                            <h4>Soil Health for High Yields</h4>
+                            <p>Learn how to test your soil and use organic methods to improve its quality.</p>
+                            <a href="#" class="btn btn-primary">Read Guide</a>
+                        </div>
+                    </div>
+                    <div class="guide-card">
+                        <div class="guide-icon"><i class="fas fa-sun"></i></div>
+                        <div class="guide-info">
+                            <h4>Optimal Sowing Schedules</h4>
+                            <p>Seasonal crop calendars and optimal planting times for different regions.</p>
+                            <a href="#" class="btn btn-primary">Read Guide</a>
+                        </div>
+                    </div>
+                    <div class="guide-card">
+                        <div class="guide-icon"><i class="fas fa-utensils"></i></div>
+                        <div class="guide-info">
+                            <h4>Nutrient Management Basics</h4>
+                            <p>Understanding NPK and how to apply the right nutrients at the right time.</p>
+                            <a href="#" class="btn btn-primary">Read Guide</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="dashboard.js"></script>
+</body>
+</html>
