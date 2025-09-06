@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Admin Notifications - Eco-Farm Manager</title>
+	<link rel="stylesheet" href="admin.css">
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+	<div class="admin-container">
+		<aside class="admin-sidebar">
+			<div class="sidebar-header">
+				<div class="admin-logo">
+					<i class="fas fa-leaf"></i>
+					<span>Eco-Farm Manager</span>
+				</div>
+				<div class="admin-role">Administrator</div>
+			</div>
+			<nav class="sidebar-nav">
+				<ul>
+					<li class="nav-item"><a href="admin-dashboard.html"><i class="fas fa-th-large"></i><span>Dashboard</span></a></li>
+					<li class="nav-item"><a href="admin-users.html"><i class="fas fa-users"></i><span>User Management</span></a></li>
+					<li class="nav-item"><a href="admin-content.html"><i class="fas fa-file-alt"></i><span>Content Management</span></a></li>
+					<li class="nav-item"><a href="admin-analytics.html"><i class="fas fa-chart-line"></i><span>Analytics</span></a></li>
+					<li class="nav-item"><a href="admin-settings.html"><i class="fas fa-cog"></i><span>Settings</span></a></li>
+					<li class="nav-item active"><a href="admin-notifications.html"><i class="fas fa-bell"></i><span>Notifications</span></a></li>
+				</ul>
+			</nav>
+		</aside>
+		<main class="admin-main">
+			<header class="admin-header">
+				<h1>Notifications</h1>
+			</header>
+			<div class="admin-content">
+				<div class="notification-send">
+					<h2>Send Notification</h2>
+					<form id="sendNotificationForm">
+						<input type="text" placeholder="Notification Title" required>
+						<textarea placeholder="Notification Message" required></textarea>
+						<button type="submit" class="btn btn-primary">Send</button>
+					</form>
+				</div>
+				<div class="notification-list">
+					<h2>Recent Notifications</h2>
+					<ul>
+						<li><strong>Weather Alert:</strong> Heavy rain expected tomorrow. <span class="date">2025-09-05</span></li>
+						<li><strong>System Update:</strong> New crop recommendation model deployed. <span class="date">2025-09-03</span></li>
+						<li><strong>Pest Warning:</strong> Increased pest activity in Punjab region. <span class="date">2025-09-01</span></li>
+					</ul>
+				</div>
+			</div>
+		</main>
+	</div>
+	<script src="admin.js"></script>
+</body>
+</html>

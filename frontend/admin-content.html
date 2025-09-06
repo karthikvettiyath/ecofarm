@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Content Management - Eco-Farm Manager</title>
+    <link rel="stylesheet" href="admin.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar Navigation -->
+        <aside class="admin-sidebar">
+            <div class="sidebar-header">
+                <div class="admin-logo">
+                    <i class="fas fa-leaf"></i>
+                    <span>Eco-Farm Manager</span>
+                </div>
+                <div class="admin-role">Administrator</div>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="nav-item">
+                        <a href="admin-dashboard.html">
+                            <i class="fas fa-th-large"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="admin-users.html">
+                            <i class="fas fa-users"></i>
+                            <span>User Management</span>
+                        </a>
+                    </li>
+                    <li class="nav-item active">
+                        <a href="admin-content.html">
+                            <i class="fas fa-file-alt"></i>
+                            <span>Content Management</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="admin-analytics.html">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Analytics</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#">
+                            <i class="fas fa-cog"></i>
+                            <span>System Settings</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#">
+                            <i class="fas fa-bell"></i>
+                            <span>Notifications</span>
+                            <span class="badge">5</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <a href="index.html" class="back-to-site">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Back to Main Site</span>
+                </a>
+                <a href="#" class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <!-- Top Header -->
+            <header class="admin-header">
+                <div class="header-left">
+                    <button class="sidebar-toggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1>Content Management</h1>
+                </div>
+                <div class="header-right">
+                    <div class="search-box">
+                        <input type="text" placeholder="Search content...">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <div class="admin-profile">
+                        <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Admin Profile">
+                        <div class="profile-info">
+                            <span class="profile-name">Admin User</span>
+                            <span class="profile-role">System Administrator</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content Management -->
+            <div class="admin-content">
+                <div class="content-tabs">
+                    <button class="tab-btn active" data-tab="faqs">FAQs</button>
+                    <button class="tab-btn" data-tab="guides">Farming Guides</button>
+                    <button class="tab-btn" data-tab="articles">Articles</button>
+                    <button class="tab-btn" data-tab="alerts">Alert Templates</button>
+                </div>
+
+                <!-- FAQs Management -->
+                <div class="tab-content active" id="faqs">
+                    <div class="content-header">
+                        <div class="header-actions">
+                            <button class="btn btn-primary" id="addFaqBtn">
+                                <i class="fas fa-plus"></i>
+                                Add New FAQ
+                            </button>
+                            <div class="header-filters">
+                                <select class="filter-select">
+                                    <option>All Categories</option>
+                                    <option>Crops</option>
+                                    <option>Fertilizers</option>
+                                    <option>Pest Control</option>
+                                    <option>Weather</option>
+                                </select>
+                                <select class="filter-select">
+                                    <option>Sort by: Newest</option>
+                                    <option>Sort by: Oldest</option>
+                                    <option>Sort by: Most Viewed</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="data-card">
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Question</th>
+                                        <th>Category</th>
+                                        <th>Status</th>
+                                        <th>Views</th>
+                                        <th>Last Updated</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>How often should I water my crops during summer?</td>
+                                        <td>Crops</td>
+                                        <td><span class="status-badge active">Published</span></td>
+                                        <td>1,245</td>
+                                        <td>2 days ago</td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button class="btn-icon" title="Edit">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button class="btn-icon" title="View">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button class="btn-icon btn-delete" title="Delete">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>What is the best fertilizer for wheat cultivation?</td>
+                                        <td>Fertilizers</td>
+                                        <td><span class="status-badge active">Published</span></td>
+                                        <td>987</td>
+                                        <td>1 week ago</td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button class="btn-icon" title="Edit">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button class="btn-icon" title="View">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button class="btn-icon btn-delete" title="Delete">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>How to identify and treat common plant diseases?</td>
+                                        <td>Pest Control</td>
+                                        <td><span class="status-badge draft">Draft</span></td>
+                                        <td>0</td>
+                                        <td>3 days ago</td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button class="btn-icon" title="Edit">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button class="btn-icon" title="View">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button class="btn-icon btn-delete" title="Delete">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>When is the best time to plant rice in northern regions?</td>
+                                        <td>Crops</td>
+                                        <td><span class="status-badge active">Published</span></td>
+                                        <td>756</td>
+                                        <td>2 weeks ago</td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button class="btn-icon" title="Edit">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button class="btn-icon" title="View">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button class="btn-icon btn-delete" title="Delete">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>How to prepare soil for organic farming?</td>
+                                        <td>Fertilizers</td>
+                                        <td><span class="status-badge pending">Pending Review</span></td>
+                                        <td>0</td>
+                                        <td>5 days ago</td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button class="btn-icon" title="Edit">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button class="btn-icon" title="View">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button class="btn-icon btn-delete" title="Delete">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Pagination -->
+                        <div class="pagination">
+                            <button class="pagination-btn" disabled>
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <button class="pagination-btn active">1</button>
+                            <button class="pagination-btn">2</button>
+                            <button class="pagination-btn">3</button>
+                            <span class="pagination-ellipsis">...</span>
+                            <button class="pagination-btn">8</button>
+                            <button class="pagination-btn">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Farming Guides (Hidden by default) -->
+                <div class="tab-content" id="guides">
+                    <div class="content-header">
+                        <h2>Farming Guides Management</h2>
+                        <button class="btn btn-primary">
+                            <i class="fas fa-plus"></i>
+                            Add New Guide
+                        </button>
+                    </div>
+                    <div class="empty-state">
+                        <i class="fas fa-book-open"></i>
+                        <h3>No Farming Guides Yet</h3>
+                        <p>Get started by creating your first farming guide for farmers.</p>
+                        <button class="btn btn-primary">Create Guide</button>
+                    </div>
+                </div>
+
+                <!-- Articles (Hidden by default) -->
+                <div class="tab-content" id="articles">
+                    <div class="content-header">
+                        <h2>Articles Management</h2>
+                        <button class="btn btn-primary">
+                            <i class="fas fa-plus"></i>
+                            Add New Article
+                        </button>
+                    </div>
+                    <div class="empty-state">
+                        <i class="fas fa-newspaper"></i>
+                        <h3>No Articles Yet</h3>
+                        <p>Start writing articles to help farmers with the latest agricultural practices.</p>
+                        <button class="btn btn-primary">Write Article</button>
+                    </div>
+                </div>
+
+                <!-- Alert Templates (Hidden by default) -->
+                <div class="tab-content" id="alerts">
+                    <div class="content-header">
+                        <h2>Alert Templates Management</h2>
+                        <button class="btn btn-primary">
+                            <i class="fas fa-plus"></i>
+                            Add New Template
+                        </button>
+                    </div>
+                    <div class="empty-state">
+                        <i class="fas fa-bell"></i>
+                        <h3>No Alert Templates Yet</h3>
+                        <p>Create templates for weather, pest, and market alerts to keep farmers informed.</p>
+                        <button class="btn btn-primary">Create Template</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Add FAQ Modal -->
+    <div class="modal" id="addFaqModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add New FAQ</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form class="admin-form">
+                    <div class="form-group">
+                        <label for="faqQuestion">Question *</label>
+                        <input type="text" id="faqQuestion" required placeholder="Enter the question">
+                    </div>
+                    <div class="form-group">
+                        <label for="faqAnswer">Answer *</label>
+                        <textarea id="faqAnswer" rows="5" required placeholder="Enter the detailed answer"></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="faqCategory">Category *</label>
+                            <select id="faqCategory" required>
+                                <option value="">Select Category</option>
+                                <option value="crops">Crops</option>
+                                <option value="fertilizers">Fertilizers</option>
+                                <option value="pest-control">Pest Control</option>
+                                <option value="weather">Weather</option>
+                                <option value="soil">Soil Management</option>
+                                <option value="irrigation">Irrigation</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="faqStatus">Status *</label>
+                            <select id="faqStatus" required>
+                                <option value="published">Published</option>
+                                <option value="draft">Draft</option>
+                                <option value="pending">Pending Review</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary modal-cancel">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save FAQ</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Admin Settings - Eco-Farm Manager</title>
+	<link rel="stylesheet" href="admin.css">
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+	<div class="admin-container">
+		<aside class="admin-sidebar">
+			<div class="sidebar-header">
+				<div class="admin-logo">
+					<i class="fas fa-leaf"></i>
+					<span>Eco-Farm Manager</span>
+				</div>
+				<div class="admin-role">Administrator</div>
+			</div>
+			<nav class="sidebar-nav">
+				<ul>
+					<li class="nav-item"><a href="admin-dashboard.html"><i class="fas fa-th-large"></i><span>Dashboard</span></a></li>
+					<li class="nav-item"><a href="admin-users.html"><i class="fas fa-users"></i><span>User Management</span></a></li>
+					<li class="nav-item"><a href="admin-content.html"><i class="fas fa-file-alt"></i><span>Content Management</span></a></li>
+					<li class="nav-item"><a href="admin-analytics.html"><i class="fas fa-chart-line"></i><span>Analytics</span></a></li>
+					<li class="nav-item active"><a href="admin-settings.html"><i class="fas fa-cog"></i><span>Settings</span></a></li>
+					<li class="nav-item"><a href="admin-notifications.html"><i class="fas fa-bell"></i><span>Notifications</span></a></li>
+				</ul>
+			</nav>
+		</aside>
+		<main class="admin-main">
+			<header class="admin-header">
+				<h1>Settings</h1>
+			</header>
+			<div class="admin-content">
+				<div class="settings-section">
+					<h2>Admin Profile</h2>
+					<form id="adminProfileForm">
+						<label for="adminName">Name:</label>
+						<input type="text" id="adminName" value="Admin User" required>
+						<label for="adminEmail">Email:</label>
+						<input type="email" id="adminEmail" value="admin@ecofarm.com" required>
+						<button type="submit" class="btn btn-primary">Update Profile</button>
+					</form>
+				</div>
+				<div class="settings-section">
+					<h2>Site Settings</h2>
+					<form id="siteSettingsForm">
+						<label for="siteName">Site Name:</label>
+						<input type="text" id="siteName" value="Eco-Farm Manager" required>
+						<label for="supportEmail">Support Email:</label>
+						<input type="email" id="supportEmail" value="support@ecofarm.com" required>
+						<button type="submit" class="btn btn-primary">Save Settings</button>
+					</form>
+				</div>
+			</div>
+		</main>
+	</div>
+	<script src="admin.js"></script>
+</body>
+</html>
