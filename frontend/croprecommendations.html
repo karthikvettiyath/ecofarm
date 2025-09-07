@@ -30,16 +30,18 @@
 		</aside>
 
 		<main class="main-content">
-			<header class="top-bar">
-				<div class="search-box">
-					<input type="text" placeholder="Search crops...">
-					<i class="fas fa-search"></i>
-				</div>
-				<div class="user-info">
-					<img src="https://ui-avatars.com/api/?name=Farmer+User&background=4caf50&color=fff" alt="User">
-					<span>Welcome, Farmer!</span>
+			
+			<header class="top-bar" style="display: flex; justify-content: space-between; align-items: center; position: relative; padding: 20px 40px 20px 0;">
+				<div></div>
+				<div class="user-info" style="display: flex; align-items: center;">
+					<span style="display: flex; align-items: center; gap: 12px; font-size: 1.1rem; font-weight: 500; color: #2e7d32; background: #f6fff6; padding: 10px 24px; border-radius: 24px; box-shadow: 0 2px 8px rgba(46,125,50,0.08);">
+						<i class="fas fa-tractor" style="font-size: 1.5rem; color: #4caf50;"></i>
+						Welcome, Farmer!
+					</span>
 				</div>
 			</header>
+			</header>
+							
 
 			<div class="content">
 				<div class="welcome-banner">
@@ -58,6 +60,11 @@
 									<option value="sandy">Sandy</option>
 									<option value="loamy">Loamy</option>
 									<option value="silty">Silty</option>
+									<option value="peaty">Peaty</option>
+									<option value="chalky">Chalky</option>
+									<option value="saline">Saline</option>
+									<option value="red">Red</option>
+									<option value="black">Black</option>
 								</select>
 							</div>
 							<div class="form-group">
@@ -77,6 +84,7 @@
 						<div class="recommendations-content">
 							<p>Enter your details to see crop recommendations here.</p>
 						</div>
+						<div id="cropDetails" style="margin-top:20px;"></div>
 					</div>
 				</div>
 			</div>
@@ -87,27 +95,68 @@
 		document.addEventListener('DOMContentLoaded', function() {
 			const cropForm = document.getElementById('cropForm');
 			const recommendationsContent = document.querySelector('.recommendations-content');
+			const cropDetails = document.getElementById('cropDetails');
+			const searchInput = document.querySelector('.search-box input');
+			let allCrops = [];
 
 			cropForm.addEventListener('submit', function(e) {
 				e.preventDefault();
 				const soilType = document.getElementById('soilType').value;
-				const temperature = parseInt(document.getElementById('temperature').value, 10);
-				const rainfall = parseInt(document.getElementById('rainfall').value, 10);
+				const temperature = document.getElementById('temperature').value;
+				const rainfall = document.getElementById('rainfall').value;
 
-				// Simulated recommendations logic
-				let crops = [];
-				if (soilType === 'loamy' && temperature >= 20 && temperature <= 30 && rainfall >= 100 && rainfall <= 200) {
-					crops = ['Wheat', 'Maize', 'Barley'];
-				} else if (soilType === 'clay' && temperature >= 25 && rainfall >= 150) {
-					crops = ['Rice', 'Sugarcane'];
-				} else if (soilType === 'sandy' && temperature >= 22 && rainfall < 100) {
-					crops = ['Millet', 'Groundnut'];
-				} else {
-					crops = ['Check with your local extension officer for best options.'];
-				}
+				recommendationsContent.innerHTML = '<p>Loading recommendations...</p>';
+				cropDetails.innerHTML = '';
 
-				recommendationsContent.innerHTML = `<ul>${crops.map(crop => `<li>${crop}</li>`).join('')}</ul>`;
+				fetch(`http://localhost:5000/api/crops?soilType=${soilType}&temperature=${temperature}&rainfall=${rainfall}`)
+					.then(res => {
+						if (!res.ok) {
+							throw new Error('Network response was not ok');
+						}
+						return res.json();
+					})
+					.then(data => {
+						allCrops = data;
+						renderRecommendations(data);
+					})
+					.catch(error => {
+						console.error('Error:', error);
+						recommendationsContent.innerHTML = `
+							<p style="color: #d32f2f;">
+								Error: Could not connect to server. 
+								<br><small>Make sure your backend is running on port 5000</small>
+							</p>
+						`;
+						cropDetails.innerHTML = '';
+					});
 			});
+
+			searchInput.addEventListener('input', function() {
+				const term = searchInput.value.trim().toLowerCase();
+				if (allCrops.length > 0) {
+					const filtered = allCrops.filter(c => c.recommended_crop.toLowerCase().includes(term));
+					renderRecommendations(filtered);
+				}
+			});
+
+			function renderRecommendations(data) {
+				if (data.length === 0) {
+					recommendationsContent.innerHTML = '<p>No recommendations found for these conditions.</p>';
+					cropDetails.innerHTML = '';
+				} else {
+					recommendationsContent.innerHTML = `
+						<ul style="list-style: none; padding: 0;">
+							${data.map(c => `<li style="padding: 8px; background: #f0f7f0; margin: 5px 0; border-radius: 5px;">🌱 ${c.recommended_crop}</li>`).join('')}
+						</ul>
+					`;
+					cropDetails.innerHTML = data.map(c => `
+						<div style="background: #e8f5e9; padding: 15px; margin: 10px 0; border-radius: 8px; border-left: 4px solid #4caf50;">
+							<strong style="color: #2e7d32;">${c.recommended_crop}:</strong> 
+							<span style="color: #333;">${c.crop_details}</span>
+						</div>
+					`).join('');
+				}
+			}
 		});
 	</script>
 </body>
