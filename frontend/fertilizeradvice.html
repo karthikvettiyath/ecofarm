@@ -17,9 +17,10 @@
                 <ul>
                     <li><a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
                     <li><a href="croprecommendations.html"><i class="fas fa-seedling"></i> Crop Recommendations</a></li>
-                    <li class="active"><a href="#"><i class="fas fa-flask"></i> Fertilizer Advice</a></li>
+                    <li class="active"><a href="fertilizeradvice.html"><i class="fas fa-flask"></i> Fertilizer Advice</a></li>
                     <li><a href="yieldrecords.html"><i class="fas fa-chart-line"></i> Yield Records</a></li>
                     <li><a href="chatbot.html"><i class="fas fa-robot"></i> Chatbot</a></li>
+                    <li><a href="faq.html"><i class="fas fa-question-circle"></i> FAQs</a></li>
                     <li><a href="knowledgebase.html"><i class="fas fa-book"></i> Knowledge Base</a></li>
                     <li><a href="alerts.html"><i class="fas fa-bell"></i> Alerts</a></li>
                     <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
@@ -30,10 +31,6 @@
 
         <main class="main-content">
             <header class="top-bar">
-                <div class="search-box">
-                    <input type="text" placeholder="Search..." id="searchBox">
-                    <i class="fas fa-search"></i>
-                </div>
                 <div class="user-info">
                     <img src="https://ui-avatars.com/api/?name=Farmer+User&background=4caf50&color=fff" alt="User">
                     <span>Welcome, Farmer!</span>
@@ -42,41 +39,61 @@
 
             <div class="content">
                 <div class="welcome-banner">
-                    <h1>Personalized Fertilizer Advice</h1>
-                    <p>Get data-driven fertilizer recommendations for your crops and soil.</p>
+                    <h1>Fertilizer Advice</h1>
+                    <p>Get personalized fertilizer recommendations based on your soil and crop needs.</p>
                 </div>
 
                 <div class="content-grid">
                     <div class="card fertilizer-form-card">
-                        <h2><i class="fas fa-flask"></i> Get Your Advice</h2>
+                        <h2><i class="fas fa-flask"></i> Find Suitable Fertilizers</h2>
                         <form id="fertilizerForm">
                             <div class="form-group">
-                                <label for="cropTypeFert">Crop Type:</label>
-                                <select id="cropTypeFert">
-                                    <option value="wheat">Wheat</option>
-                                    <option value="rice">Rice</option>
-                                    <option value="corn">Corn</option>
-                                    <option value="sugarcane">Sugarcane</option>
-                                    <option value="tomato">Tomato</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="soilTypeFert">Soil Type:</label>
-                                <select id="soilTypeFert">
-                                    <option value="clay">Clay</option>
+                                <label for="soilType">Soil Type:</label>
+                                <select id="soilType" required>
+                                    <option value="">Select Soil Type</option>
                                     <option value="sandy">Sandy</option>
+                                    <option value="clay">Clay</option>
                                     <option value="loamy">Loamy</option>
                                     <option value="silty">Silty</option>
+                                    <option value="peaty">Peaty</option>
                                 </select>
                             </div>
+
+                            <div class="form-group">
+                                <label for="cropType">Crop Type:</label>
+                                <select id="cropType" required>
+                                    <option value="">Select Crop Type</option>
+                                    <option value="vegetables">Vegetables</option>
+                                    <option value="cereals">Cereals</option>
+                                    <option value="fruits">Fruits</option>
+                                    <option value="legumes">Legumes</option>
+                                    <option value="root crops">Root Crops</option>
+                                    <option value="leafy greens">Leafy Greens</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="nutrientDeficiency">Nutrient Deficiency:</label>
+                                <select id="nutrientDeficiency" required>
+                                    <option value="">Select Deficiency</option>
+                                    <option value="nitrogen">Nitrogen (N)</option>
+                                    <option value="phosphorus">Phosphorus (P)</option>
+                                    <option value="potassium">Potassium (K)</option>
+                                    <option value="calcium">Calcium (Ca)</option>
+                                    <option value="magnesium">Magnesium (Mg)</option>
+                                    <option value="iron">Iron (Fe)</option>
+                                    <option value="micronutrients">Micronutrients</option>
+                                </select>
+                            </div>
+
                             <button type="submit" class="btn btn-primary">Get Fertilizer Advice</button>
                         </form>
                     </div>
 
-                    <div class="card advice-display-card">
-                        <h2><i class="fas fa-seedling"></i> Your Recommendation</h2>
-                        <div class="advice-content">
-                            <p>Enter your details to receive a personalized fertilizer recommendation based on your inputs. Recommendations will appear here.</p>
+                    <div class="card recommendations-card">
+                        <h2><i class="fas fa-list"></i> Recommended Fertilizers</h2>
+                        <div class="recommendations-content" id="fertilizerResults">
+                            <p>Enter your details to see fertilizer recommendations here.</p>
                         </div>
                     </div>
                 </div>
@@ -84,31 +101,56 @@
         </main>
     </div>
 
-    <script src="dashboard.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const fertilizerForm = document.getElementById('fertilizerForm');
-            const adviceDisplay = document.querySelector('.advice-content');
+            const fertilizerResults = document.getElementById('fertilizerResults');
 
             fertilizerForm.addEventListener('submit', function(e) {
                 e.preventDefault();
-                const cropType = document.getElementById('cropTypeFert').value;
-                const soilType = document.getElementById('soilTypeFert').value;
+                const soilType = document.getElementById('soilType').value;
+                const cropType = document.getElementById('cropType').value;
+                const nutrientDeficiency = document.getElementById('nutrientDeficiency').value;
 
-                // For a full-stack app, this would be a POST request to the backend.
-                // Example using simulated data:
-                let recommendation = '';
-                if (cropType === 'wheat' && soilType === 'loamy') {
-                    recommendation = 'For wheat in loamy soil, use a balanced NPK fertilizer (e.g., 10-10-10) with an additional nitrogen application during the tillering stage.';
-                } else if (cropType === 'rice' && soilType === 'clay') {
-                    recommendation = 'For rice in clay soil, a nitrogen-rich fertilizer is recommended. Apply in two splits: one at planting and another during the active vegetative phase.';
-                } else if (cropType === 'corn' && soilType === 'sandy') {
-                    recommendation = 'For corn in sandy soil, apply nitrogen fertilizer in multiple small doses to prevent leaching. A fertilizer with a higher P and K ratio is also beneficial.';
-                } else {
-                    recommendation = `Based on your selection of ${cropType} and ${soilType} soil, a general-purpose NPK fertilizer with a balanced ratio is advised.`;
-                }
+                fertilizerResults.innerHTML = '<p class="loading">Analyzing your soil and crop needs...</p>';
 
-                adviceDisplay.innerHTML = `<p><strong>Recommendation:</strong> ${recommendation}</p>`;
+                fetch(`http://localhost:5000/api/fertilizers?soilType=${soilType}&cropType=${cropType}&nutrientDeficiency=${nutrientDeficiency}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.length === 0) {
+                            fertilizerResults.innerHTML = `
+                                <div class="error-message">
+                                    <p>No fertilizer recommendations found for these conditions.</p>
+                                    <p>Try different soil type, crop type, or nutrient deficiency.</p>
+                                </div>
+                            `;
+                        } else {
+                            fertilizerResults.innerHTML = `
+                                <div class="fertilizer-grid">
+                                    ${data.map(fertilizer => `
+                                        <div class="fertilizer-card">
+                                            <h3>${fertilizer.fertilizer_type}</h3>
+                                            <div class="fertilizer-details">
+                                                <p><strong>Application:</strong> ${fertilizer.application_method}</p>
+                                                <p><strong>Dosage:</strong> ${fertilizer.dosage}</p>
+                                                <p><strong>Timing:</strong> ${fertilizer.timing}</p>
+                                                <p><strong>Benefits:</strong> ${fertilizer.benefits}</p>
+                                            </div>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            `;
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        fertilizerResults.innerHTML = `
+                            <div class="error-message">
+                                <p>Error connecting to fertilizer database.</p>
+                                <p>Please make sure the backend server is running.</p>
+                            </div>
+                        `;
+                    });
             });
         });
     </script>
