@@ -27,6 +27,12 @@ db.connect((err) => {
     }
 });
 
+// Route logging middleware (optional for debugging)
+app.use((req, res, next) => {
+    console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
+    next();
+});
+
 // 🌱 CROP RECOMMENDATIONS API
 app.get('/api/crops', (req, res) => {
     const { soilType, temperature, rainfall } = req.query;
@@ -213,6 +219,129 @@ app.get('/api/crop-types', (req, res) => {
     });
 });
 
+// ==================== KNOWLEDGE BASE API ENDPOINTS ====================
+
+// GET all knowledge base articles
+app.get('/api/knowledge-base', (req, res) => {
+  const { category, search } = req.query;
+  
+  let sql = `SELECT * FROM knowledge_base WHERE 1=1`;
+  let params = [];
+
+  if (category && category !== 'all') {
+    sql += ` AND category = ?`;
+    params.push(category);
+  }
+
+  if (search) {
+    sql += ` AND (title LIKE ? OR content LIKE ? OR tags LIKE ?)`;
+    const searchTerm = `%${search}%`;
+    params.push(searchTerm, searchTerm, searchTerm);
+  }
+
+  sql += ` ORDER BY created_at DESC`;
+
+  db.query(sql, params, (err, results) => {
+    if (err) {
+      console.error('Database error:', err);
+      return res.status(500).json({ error: 'Database error' });
+    }
+    res.json(results);
+  });
+});
+
+// GET article by ID
+app.get('/api/knowledge-base/:id', (req, res) => {
+  const { id } = req.params;
+  
+  const sql = `SELECT * FROM knowledge_base WHERE id = ?`;
+  
+  db.query(sql, [id], (err, results) => {
+    if (err) {
+      console.error('Database error:', err);
+      return res.status(500).json({ error: 'Database error' });
+    }
+    
+    if (results.length === 0) {
+      return res.status(404).json({ error: 'Article not found' });
+    }
+    
+    res.json(results[0]);
+  });
+});
+
+// GET all categories
+app.get('/api/knowledge-base/categories', (req, res) => {
+  const sql = `SELECT DISTINCT category FROM knowledge_base ORDER BY category`;
+  
+  db.query(sql, (err, results) => {
+    if (err) {
+      console.error('Database error:', err);
+      return res.status(500).json({ error: 'Database error' });
+    }
+    res.json(results.map(row => row.category));
+  });
+});
+
+// POST new article (admin functionality)
+app.post('/api/knowledge-base', (req, res) => {
+  const { title, content, category, tags, author } = req.body;
+  
+  if (!title || !content || !category) {
+    return res.status(400).json({ error: 'Title, content, and category are required' });
+  }
+
+  const sql = `
+    INSERT INTO knowledge_base (title, content, category, tags, author)
+    VALUES (?, ?, ?, ?, ?)
+  `;
+  
+  db.query(sql, [title, content, category, tags, author], (err, results) => {
+    if (err) {
+      console.error('Database error:', err);
+      return res.status(500).json({ error: 'Database error' });
+    }
+    res.json({ message: 'Article created successfully!', id: results.insertId });
+  });
+});
+
+// PUT update article
+app.put('/api/knowledge-base/:id', (req, res) => {
+  const { id } = req.params;
+  const { title, content, category, tags } = req.body;
+  
+  const sql = `
+    UPDATE knowledge_base 
+    SET title = ?, content = ?, category = ?, tags = ?, updated_at = CURRENT_TIMESTAMP
+    WHERE id = ?
+  `;
+  
+  db.query(sql, [title, content, category, tags, id], (err, results) => {
+    if (err) {
+      console.error('Database error:', err);
+      return res.status(500).json({ error: 'Database error' });
+    }
+    res.json({ message: 'Article updated successfully!' });
+  });
+});
+
+// DELETE article
+app.delete('/api/knowledge-base/:id', (req, res) => {
+  const { id } = req.params;
+  
+  const sql = `DELETE FROM knowledge_base WHERE id = ?`;
+  
+  db.query(sql, [id], (err, results) => {
+    if (err) {
+      console.error('Database error:', err);
+      return res.status(500).json({ error: 'Database error' });
+    }
+    res.json({ message: 'Article deleted successfully!' });
+  });
+});
+
+// ==================== END KNOWLEDGE BASE API ENDPOINTS ====================
+
 // Default route
 app.get('/', (req, res) => {
     res.json({ 
@@ -222,20 +351,22 @@ app.get('/', (req, res) => {
             crops: '/api/crops',
             fertilizers: '/api/fertilizers',
             yieldRecords: '/api/yield-records',
+            knowledgeBase: '/api/knowledge-base',
             dashboard: '/api/dashboard/stats',
             health: '/api/health'
         }
     });
 });
 
-// Error handling middleware
+// Error handling middleware (must be after all routes)
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).json({ error: 'Something went wrong!' });
 });
 
-// 404 handler
+// 404 handler (must be LAST - after all other routes)
 app.use((req, res) => {
+    console.log(`❌ 404 - Route not found: ${req.method} ${req.url}`);
     res.status(404).json({ error: 'Endpoint not found' });
 });
 
@@ -247,6 +378,7 @@ app.listen(PORT, () => {
     console.log(`🌱 Crop API: http://localhost:${PORT}/api/crops`);
     console.log(`💧 Fertilizer API: http://localhost:${PORT}/api/fertilizers`);
     console.log(`📈 Yield Records API: http://localhost:${PORT}/api/yield-records`);
+    console.log(`📚 Knowledge Base API: http://localhost:${PORT}/api/knowledge-base`);
 });
 
 // Graceful shutdown

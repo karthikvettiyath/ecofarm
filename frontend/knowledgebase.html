@@ -5,10 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eco-Farm Manager - Knowledge Base</title>
     <link rel="stylesheet" href="dashboard.css">
-    
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 </head>
-    <body>
+<body>
     <div class="dashboard-container">
         <aside class="sidebar">
             <div class="logo">
@@ -21,7 +20,8 @@
                     <li><a href="fertilizeradvice.html"><i class="fas fa-flask"></i> Fertilizer Advice</a></li>
                     <li><a href="yieldrecords.html"><i class="fas fa-chart-line"></i> Yield Records</a></li>
                     <li><a href="chatbot.html"><i class="fas fa-robot"></i> Chatbot</a></li>
-                    <li class="active"><a href="#"><i class="fas fa-book"></i> Knowledge Base</a></li>
+                    <li><a href="faq.html"><i class="fas fa-question-circle"></i> FAQs</a></li>
+                    <li class="active"><a href="knowledgebase.html"><i class="fas fa-book"></i> Knowledge Base</a></li>
                     <li><a href="alerts.html"><i class="fas fa-bell"></i> Alerts</a></li>
                     <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
                     <li><a href="#" id="logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
@@ -32,8 +32,8 @@
         <main class="main-content">
             <header class="top-bar">
                 <div class="search-box">
-                    <input type="text" placeholder="Search knowledge base...">
-                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search farming articles...">
+                    <i class="fas fa-search" id="searchButton"></i>
                 </div>
                 <div class="user-info">
                     <img src="https://ui-avatars.com/api/?name=Farmer+User&background=4caf50&color=fff" alt="User">
@@ -43,55 +43,398 @@
 
             <div class="content">
                 <div class="welcome-banner">
-                    <h1>Knowledge Base & Guides</h1>
-                    <p>Access a comprehensive library of farming best practices and guides.</p>
+                    <h1><i class="fas fa-book"></i> Knowledge Base</h1>
+                    <p>Discover expert farming techniques, sustainable practices, and agricultural wisdom</p>
                 </div>
 
-                <div class="knowledge-grid">
-                    <div class="guide-card">
-                        <div class="guide-icon"><i class="fas fa-water"></i></div>
-                        <div class="guide-info">
-                            <h4>Water Management in Monsoon</h4>
-                            <p>Tips for efficient irrigation and drainage during heavy rainfall seasons.</p>
-                            <a href="#" class="btn btn-primary">Read Guide</a>
+                <div class="filters-section">
+                    <div class="filter-group">
+                        <label for="categoryFilter"><i class="fas fa-filter"></i> Category:</label>
+                        <select id="categoryFilter">
+                            <option value="all">All Categories</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <button class="btn btn-primary" onclick="loadArticles()">
+                            <i class="fas fa-refresh"></i> Refresh
+                        </button>
+                    </div>
+                </div>
+
+                <div class="content-grid">
+                    <!-- Articles List Section -->
+                    <div class="card articles-card">
+                        <div class="card-header">
+                            <h2><i class="fas fa-book-open"></i> Farming Articles</h2>
+                            <span class="article-count" id="articleCount">Loading...</span>
+                        </div>
+                        <div id="articlesList" class="articles-list">
+                            <div class="loading">
+                                <i class="fas fa-spinner fa-spin"></i> Loading articles...
+                            </div>
                         </div>
                     </div>
-                    <div class="guide-card">
-                        <div class="guide-icon"><i class="fas fa-bug"></i></div>
-                        <div class="guide-info">
-                            <h4>Identifying Common Pests</h4>
-                            <p>A visual guide to identifying common pests and natural control methods.</p>
-                            <a href="#" class="btn btn-primary">Read Guide</a>
+
+                    <!-- Article Detail View (initially hidden) -->
+                    <div class="card article-detail-card" id="articleDetail" style="display: none;">
+                        <div class="article-header">
+                            <button class="btn-back" onclick="showArticleList()">
+                                <i class="fas fa-arrow-left"></i> Back to Articles
+                            </button>
+                            <h2 id="articleTitle">Article Title</h2>
+                            <div class="article-meta-detail">
+                                <span id="articleCategory" class="category-badge">Category</span>
+                                <span id="articleAuthor"><i class="fas fa-user"></i> Author</span>
+                                <span id="articleDate"><i class="fas fa-calendar"></i> Date</span>
+                                <span id="articleViews"><i class="fas fa-eye"></i> Views</span>
+                            </div>
+                        </div>
+                        
+                        <div id="articleContent" class="article-content">
+                            <!-- Content will be loaded here -->
                         </div>
                     </div>
-                    <div class="guide-card">
-                        <div class="guide-icon"><i class="fas fa-seedling"></i></div>
-                        <div class="guide-info">
-                            <h4>Soil Health for High Yields</h4>
-                            <p>Learn how to test your soil and use organic methods to improve its quality.</p>
-                            <a href="#" class="btn btn-primary">Read Guide</a>
+
+                    <!-- Quick Stats Sidebar -->
+                    <div class="card stats-card">
+                        <h2><i class="fas fa-chart-bar"></i> Knowledge Stats</h2>
+                        
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-number" id="totalArticles">0</div>
+                                <div class="stat-label">Total Articles</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number" id="totalViews">0</div>
+                                <div class="stat-label">Total Views</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number" id="totalCategories">0</div>
+                                <div class="stat-label">Categories</div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="guide-card">
-                        <div class="guide-icon"><i class="fas fa-sun"></i></div>
-                        <div class="guide-info">
-                            <h4>Optimal Sowing Schedules</h4>
-                            <p>Seasonal crop calendars and optimal planting times for different regions.</p>
-                            <a href="#" class="btn btn-primary">Read Guide</a>
-                        </div>
-                    </div>
-                    <div class="guide-card">
-                        <div class="guide-icon"><i class="fas fa-utensils"></i></div>
-                        <div class="guide-info">
-                            <h4>Nutrient Management Basics</h4>
-                            <p>Understanding NPK and how to apply the right nutrients at the right time.</p>
-                            <a href="#" class="btn btn-primary">Read Guide</a>
+                        
+                        <div class="popular-articles">
+                            <h3><i class="fas fa-fire"></i> Popular Topics</h3>
+                            <div id="popularTopics" class="topics-list">
+                                <div class="loading">Loading topics...</div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </main>
     </div>
-    <script src="dashboard.js"></script>
+
+    <script>
+        let allArticles = [];
+        let currentArticleId = null;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Knowledge Base loaded - initializing...');
+            initializeKnowledgeBase();
+        });
+
+        function initializeKnowledgeBase() {
+            loadArticles();
+            loadCategories();
+            setupEventListeners();
+        }
+
+        function loadArticles(category = 'all', search = '') {
+            console.log('Loading articles...');
+            
+            showLoading('articlesList', 'Loading articles...');
+            
+            let url = 'http://localhost:5000/api/knowledge-base';
+            if (category !== 'all' || search) {
+                const params = new URLSearchParams();
+                if (category !== 'all') params.append('category', category);
+                if (search) params.append('search', search);
+                url += '?' + params.toString();
+            }
+
+            fetch(url)
+                .then(response => {
+                    console.log('API response status:', response.status);
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(articles => {
+                    console.log('Successfully loaded articles:', articles.length);
+                    allArticles = articles;
+                    
+                    if (articles.length === 0) {
+                        showNoArticles();
+                    } else {
+                        displayArticles(articles);
+                    }
+                    
+                    // Update article count
+                    updateArticleCount(articles.length);
+                    
+                    // Update stats
+                    updateKnowledgeStats(articles);
+                })
+                .catch(error => {
+                    console.error('Error loading articles:', error);
+                    showError('articlesList', `
+                        <div style="text-align: center; padding: 20px;">
+                            <h3>🚨 Connection Error</h3>
+                            <p>Could not load articles from server.</p>
+                            <p><strong>Error:</strong> ${error.message}</p>
+                            <p>Please make sure:</p>
+                            <ul style="text-align: left; display: inline-block;">
+                                <li>Backend server is running on port 5000</li>
+                                <li>Knowledge base table exists in database</li>
+                            </ul>
+                            <br>
+                            <button onclick="loadArticles()" class="btn btn-primary">
+                                <i class="fas fa-refresh"></i> Try Again
+                            </button>
+                        </div>
+                    `);
+                    
+                    // Set default stats on error
+                    updateKnowledgeStats([]);
+                });
+        }
+
+        function updateArticleCount(count) {
+            const articleCountElement = document.getElementById('articleCount');
+            if (articleCountElement) {
+                articleCountElement.textContent = `${count} articles`;
+            }
+        }
+
+        function updateKnowledgeStats(articles) {
+            // Safe element references
+            const totalArticlesElement = document.getElementById('totalArticles');
+            const totalViewsElement = document.getElementById('totalViews');
+            const totalCategoriesElement = document.getElementById('totalCategories');
+            const popularTopicsElement = document.getElementById('popularTopics');
+
+            if (!totalArticlesElement || !totalViewsElement || !totalCategoriesElement || !popularTopicsElement) {
+                console.error('Stats elements not found in DOM');
+                return;
+            }
+
+            if (!articles || articles.length === 0) {
+                totalArticlesElement.textContent = '0';
+                totalViewsElement.textContent = '0';
+                totalCategoriesElement.textContent = '0';
+                popularTopicsElement.innerHTML = '<div class="no-data">No articles yet</div>';
+                return;
+            }
+
+            // Calculate statistics
+            const totalArticles = articles.length;
+            const totalViews = articles.reduce((sum, article) => sum + (article.views || 0), 0);
+            const totalCategories = new Set(articles.map(article => article.category)).size;
+            
+            // Most popular articles (by views)
+            const popularArticles = [...articles]
+                .sort((a, b) => (b.views || 0) - (a.views || 0))
+                .slice(0, 3);
+
+            // Update DOM with statistics
+            totalArticlesElement.textContent = totalArticles;
+            totalViewsElement.textContent = totalViews;
+            totalCategoriesElement.textContent = totalCategories;
+            
+            // Update popular topics
+            if (popularArticles.length > 0) {
+                popularTopicsElement.innerHTML = popularArticles.map(article => `
+                    <div class="topic-item" onclick="showArticleDetail(${article.id})">
+                        <span class="topic-title">${truncateText(article.title, 20)}</span>
+                        <span class="topic-views">${article.views || 0} views</span>
+                    </div>
+                `).join('');
+            } else {
+                popularTopicsElement.innerHTML = '<div class="no-data">No views yet</div>';
+            }
+        }
+
+        function loadCategories() {
+            fetch('http://localhost:5000/api/knowledge-base/categories')
+                .then(response => {
+                    if (!response.ok) throw new Error('Categories API failed');
+                    return response.json();
+                })
+                .then(categories => {
+                    const filter = document.getElementById('categoryFilter');
+                    if (filter) {
+                        // Clear existing options except the first one
+                        while (filter.options.length > 1) {
+                            filter.remove(1);
+                        }
+                        
+                        categories.forEach(category => {
+                            const option = document.createElement('option');
+                            option.value = category;
+                            option.textContent = category;
+                            filter.appendChild(option);
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading categories:', error);
+                });
+        }
+
+        function displayArticles(articles) {
+            const container = document.getElementById('articlesList');
+            if (!container) return;
+            
+            container.innerHTML = articles.map(article => `
+                <div class="article-item" onclick="showArticleDetail(${article.id})">
+                    <div class="article-item-header">
+                        <h3>${article.title}</h3>
+                        <span class="article-date">${formatDate(article.created_at)}</span>
+                    </div>
+                    <div class="article-preview">
+                        ${truncateText(article.content, 120)}...
+                    </div>
+                    <div class="article-meta">
+                        <span class="category-badge">${article.category}</span>
+                        <span><i class="fas fa-user"></i> ${article.author}</span>
+                        <span><i class="fas fa-eye"></i> ${article.views || 0}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function showArticleDetail(articleId) {
+            console.log('Showing article detail for ID:', articleId);
+            
+            fetch(`http://localhost:5000/api/knowledge-base/${articleId}`)
+                .then(response => {
+                    if (!response.ok) throw new Error('Article not found');
+                    return response.json();
+                })
+                .then(article => {
+                    currentArticleId = articleId;
+                    
+                    // Safe element references
+                    const articleTitle = document.getElementById('articleTitle');
+                    const articleCategory = document.getElementById('articleCategory');
+                    const articleAuthor = document.getElementById('articleAuthor');
+                    const articleDate = document.getElementById('articleDate');
+                    const articleViews = document.getElementById('articleViews');
+                    const articleContent = document.getElementById('articleContent');
+                    const articleDetail = document.getElementById('articleDetail');
+                    const articlesCard = document.querySelector('.articles-card');
+
+                    if (articleTitle) articleTitle.textContent = article.title;
+                    if (articleCategory) {
+                        articleCategory.textContent = article.category;
+                        articleCategory.className = 'category-badge';
+                    }
+                    if (articleAuthor) articleAuthor.innerHTML = `<i class="fas fa-user"></i> ${article.author}`;
+                    if (articleDate) articleDate.innerHTML = `<i class="fas fa-calendar"></i> ${formatDate(article.created_at)}`;
+                    if (articleViews) articleViews.innerHTML = `<i class="fas fa-eye"></i> ${article.views || 0} views`;
+                    if (articleContent) articleContent.innerHTML = `<p>${article.content}</p>`;
+                    
+                    if (articlesCard) articlesCard.style.display = 'none';
+                    if (articleDetail) articleDetail.style.display = 'block';
+                })
+                .catch(error => {
+                    console.error('Error loading article:', error);
+                    alert('Error loading article details: ' + error.message);
+                });
+        }
+
+        function showArticleList() {
+            const articleDetail = document.getElementById('articleDetail');
+            const articlesCard = document.querySelector('.articles-card');
+            
+            if (articleDetail) articleDetail.style.display = 'none';
+            if (articlesCard) articlesCard.style.display = 'block';
+            currentArticleId = null;
+        }
+
+        function showLoading(elementId, message) {
+            const element = document.getElementById(elementId);
+            if (element) {
+                element.innerHTML = `
+                    <div class="loading">
+                        <i class="fas fa-spinner fa-spin"></i> ${message}
+                    </div>
+                `;
+            }
+        }
+
+        function showError(elementId, message) {
+            const element = document.getElementById(elementId);
+            if (element) {
+                element.innerHTML = message;
+            }
+        }
+
+        function showNoArticles() {
+            const container = document.getElementById('articlesList');
+            if (container) {
+                container.innerHTML = `
+                    <div class="no-articles">
+                        <i class="fas fa-book-open" style="font-size: 3em; color: #c8e6c9;"></i>
+                        <h3>No articles found</h3>
+                        <p>Try adjusting your search or filters</p>
+                    </div>
+                `;
+            }
+        }
+
+        function setupEventListeners() {
+            const searchButton = document.getElementById('searchButton');
+            const searchInput = document.getElementById('searchInput');
+            const categoryFilter = document.getElementById('categoryFilter');
+
+            if (searchButton) {
+                searchButton.addEventListener('click', performSearch);
+            }
+            
+            if (searchInput) {
+                searchInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') performSearch();
+                });
+            }
+
+            if (categoryFilter) {
+                categoryFilter.addEventListener('change', function() {
+                    const searchTerm = document.getElementById('searchInput').value.trim();
+                    loadArticles(this.value, searchTerm);
+                });
+            }
+        }
+
+        function performSearch() {
+            const searchInput = document.getElementById('searchInput');
+            const categoryFilter = document.getElementById('categoryFilter');
+            
+            if (searchInput && categoryFilter) {
+                const searchTerm = searchInput.value.trim();
+                const category = categoryFilter.value;
+                loadArticles(category, searchTerm);
+            }
+        }
+
+        // Utility functions
+        function truncateText(text, maxLength) {
+            if (!text) return '';
+            return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
+        }
+
+        function formatDate(dateString) {
+            if (!dateString) return 'Unknown date';
+            return new Date(dateString).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+            });
+        }
+    </script>
 </body>
 </html>
