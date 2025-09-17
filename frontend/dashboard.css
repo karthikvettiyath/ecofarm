@@ -35,10 +35,14 @@ body {
 
 .menu ul {
     list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 .menu li {
-    margin-bottom: 5px;
+    margin: 0;
+    padding: 0;
+    width: 100%;
 }
 
 .menu a {
@@ -49,6 +53,7 @@ body {
     color: white;
     text-decoration: none;
     transition: background-color 0.3s;
+    width: 100%;
 }
 
 .menu a:hover, .menu li.active a {
