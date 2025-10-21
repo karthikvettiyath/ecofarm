@@ -19,6 +19,7 @@
                     <li><a href="croprecommendations.html"><i class="fas fa-seedling"></i> Crop Recommendations</a></li>
                     <li><a href="fertilizeradvice.html"><i class="fas fa-flask"></i> Fertilizer Advice</a></li>
                     <li><a href="yieldrecords.html"><i class="fas fa-chart-line"></i> Yield Records</a></li>
+                    <li><a href="cropcalendar.html"><i class="fas fa-calendar-alt"></i> Crop Calendar</a></li>
                     <li><a href="chatbot.html"><i class="fas fa-robot"></i> Chatbot</a></li>
                     <li><a href="knowledgebase.html"><i class="fas fa-book"></i> Knowledge Base</a></li>
                     <li><a href="faq.html"><i class="fas fa-question-circle"></i> FAQs</a></li>
@@ -49,57 +50,10 @@
 
                 <div class="card full-height-card">
                     <h2><i class="fas fa-bell"></i> All Alerts</h2>
-                    <div class="alerts-list">
-                        <div class="alert-item">
-                            <div class="alert-icon">
-                                <i class="fas fa-cloud-rain"></i>
-                            </div>
-                            <div class="alert-content">
-                                <h4>Rainfall Alert</h4>
-                                <p>Heavy rainfall expected in your area in the next 48 hours. Secure your harvest.</p>
-                                <span class="alert-time">2 hours ago</span>
-                            </div>
-                        </div>
-                        <div class="alert-item">
-                            <div class="alert-icon">
-                                <i class="fas fa-bug"></i>
-                            </div>
-                            <div class="alert-content">
-                                <h4>Pest Warning</h4>
-                                <p>Increased locust activity reported in your region. Consider preventive measures.</p>
-                                <span class="alert-time">1 day ago</span>
-                            </div>
-                        </div>
-                        <div class="alert-item">
-                            <div class="alert-icon">
-                                <i class="fas fa-seedling"></i>
-                            </div>
-                            <div class="alert-content">
-                                <h4>Planting Season</h4>
-                                <p>Optimal time for planting wheat is approaching. Prepare your fields now.</p>
-                                <span class="alert-time">3 days ago</span>
-                            </div>
-                        </div>
-                        <div class="alert-item">
-                            <div class="alert-icon">
-                                <i class="fas fa-cloud-sun-rain"></i>
-                            </div>
-                            <div class="alert-content">
-                                <h4>Weather Advisory</h4>
-                                <p>Sudden temperature drop expected. Protect vulnerable crops from cold stress.</p>
-                                <span class="alert-time">4 days ago</span>
-                            </div>
-                        </div>
-                         <div class="alert-item">
-                            <div class="alert-icon">
-                                <i class="fas fa-chart-line"></i>
-                            </div>
-                            <div class="alert-content">
-                                <h4>Market Trend Alert</h4>
-                                <p>Prices for tomatoes are rising. Consider selling your stock now for higher profit.</p>
-                                <span class="alert-time">5 days ago</span>
-                            </div>
-                        </div>
+                    <div id="alertsLoading" class="loading">Loading alerts...</div>
+                    <div id="alertsError" class="error-message" style="display: none;"></div>
+                    <div class="alerts-list" id="alertsList">
+                        <!-- Alerts will be loaded here dynamically -->
                     </div>
                 </div>
             </div>
@@ -107,5 +61,88 @@
     </div>
 
     <script src="dashboard.js"></script>
+    <script>
+        // API base URL
+        const API_BASE = 'http://localhost:5000/api';
+
+        // Load alerts from API
+        async function loadAlerts() {
+            const loadingEl = document.getElementById('alertsLoading');
+            const errorEl = document.getElementById('alertsError');
+            const alertsListEl = document.getElementById('alertsList');
+
+            try {
+                const response = await fetch(`${API_BASE}/alerts`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const alerts = await response.json();
+
+                loadingEl.style.display = 'none';
+
+                if (alerts.length === 0) {
+                    alertsListEl.innerHTML = '<p class="no-data">No alerts available at the moment.</p>';
+                    return;
+                }
+
+                // Render alerts
+                let html = '';
+                alerts.forEach(alert => {
+                    const iconClass = getAlertIcon(alert.type);
+                    const timeAgo = getTimeAgo(new Date(alert.created_at));
+
+                    html += `
+                        <div class="alert-item">
+                            <div class="alert-icon">
+                                <i class="${iconClass}"></i>
+                            </div>
+                            <div class="alert-content">
+                                <h4>${alert.title}</h4>
+                                <p>${alert.message}</p>
+                                <span class="alert-time">${timeAgo}</span>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                alertsListEl.innerHTML = html;
+
+            } catch (error) {
+                console.error('Error loading alerts:', error);
+                loadingEl.style.display = 'none';
+                errorEl.style.display = 'block';
+                errorEl.textContent = 'Failed to load alerts. Please try again later.';
+            }
+        }
+
+        // Get appropriate icon for alert type
+        function getAlertIcon(type) {
+            const iconMap = {
+                'weather': 'fas fa-cloud-rain',
+                'pest': 'fas fa-bug',
+                'planting': 'fas fa-seedling',
+                'market': 'fas fa-chart-line',
+                'warning': 'fas fa-exclamation-triangle'
+            };
+            return iconMap[type] || 'fas fa-bell';
+        }
+
+        // Get time ago string
+        function getTimeAgo(date) {
+            const now = new Date();
+            const diffMs = now - date;
+            const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+            const diffDays = Math.floor(diffHours / 24);
+
+            if (diffHours < 1) return 'Just now';
+            if (diffHours < 24) return `${diffHours} hours ago`;
+            return `${diffDays} days ago`;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load alerts when page loads
+            loadAlerts();
+        });
+    </script>
 </body>
 </html>

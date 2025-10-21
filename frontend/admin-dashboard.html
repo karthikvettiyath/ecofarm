@@ -109,12 +109,8 @@
                             <i class="fas fa-users"></i>
                         </div>
                         <div class="stat-info">
-                            <h3>2,548</h3>
+                            <h3 id="totalUsers">Loading...</h3>
                             <p>Total Users</p>
-                        </div>
-                        <div class="stat-trend up">
-                            <i class="fas fa-arrow-up"></i>
-                            <span>12%</span>
                         </div>
                     </div>
                     <div class="stat-card">
@@ -122,12 +118,8 @@
                             <i class="fas fa-seedling"></i>
                         </div>
                         <div class="stat-info">
-                            <h3>5,327</h3>
+                            <h3 id="totalCrops">Loading...</h3>
                             <p>Crop Recommendations</p>
-                        </div>
-                        <div class="stat-trend up">
-                            <i class="fas fa-arrow-up"></i>
-                            <span>8%</span>
                         </div>
                     </div>
                     <div class="stat-card">
@@ -135,12 +127,17 @@
                             <i class="fas fa-chart-line"></i>
                         </div>
                         <div class="stat-info">
-                            <h3>1,894</h3>
+                            <h3 id="totalYieldRecords">Loading...</h3>
                             <p>Yield Records</p>
                         </div>
-                        <div class="stat-trend up">
-                            <i class="fas fa-arrow-up"></i>
-                            <span>5%</span>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="totalAlerts">Loading...</h3>
+                            <p>Alerts</p>
                         </div>
                     </div>
                     <div class="stat-card">
@@ -148,153 +145,59 @@
                             <i class="fas fa-question-circle"></i>
                         </div>
                         <div class="stat-info">
-                            <h3>327</h3>
-                            <p>Pending Queries</p>
+                            <h3 id="totalFAQs">Loading...</h3>
+                            <p>FAQs</p>
                         </div>
-                        <div class="stat-trend down">
-                            <i class="fas fa-arrow-down"></i>
-                            <span>3%</span>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="totalKnowledgeBase">Loading...</h3>
+                            <p>Knowledge Base</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="totalCropCalendar">Loading...</h3>
+                            <p>Crop Calendar</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-flask"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="totalFertilizers">Loading...</h3>
+                            <p>Fertilizer Advices</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Charts Row -->
-                <div class="charts-row">
-                    <div class="chart-card">
-                        <div class="card-header">
-                            <h3>User Growth</h3>
-                            <select class="chart-filter">
-                                <option>Last 7 Days</option>
-                                <option>Last 30 Days</option>
-                                <option>Last 90 Days</option>
-                            </select>
-                        </div>
-                        <div class="chart-container">
-                            <canvas id="userGrowthChart"></canvas>
-                        </div>
-                    </div>
-                    <div class="chart-card">
-                        <div class="card-header">
-                            <h3>Feature Usage</h3>
-                            <select class="chart-filter">
-                                <option>Last 7 Days</option>
-                                <option>Last 30 Days</option>
-                                <option>Last 90 Days</option>
-                            </select>
-                        </div>
-                        <div class="chart-container">
-                            <canvas id="featureUsageChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Recent Activity & System Status -->
-                <div class="content-row">
-                    <div class="activity-card">
-                        <div class="card-header">
-                            <h3>Recent Activity</h3>
-                            <a href="#" class="view-all">View All</a>
-                        </div>
-                        <div class="activity-list">
-                            <div class="activity-item">
-                                <div class="activity-icon">
-                                    <i class="fas fa-user-plus"></i>
-                                </div>
-                                <div class="activity-content">
-                                    <p><strong>Rajesh Kumar</strong> registered as a new farmer</p>
-                                    <span class="activity-time">2 hours ago</span>
-                                </div>
-                            </div>
-                            <div class="activity-item">
-                                <div class="activity-icon">
-                                    <i class="fas fa-seedling"></i>
-                                </div>
-                                <div class="activity-content">
-                                    <p><strong>Priya Sharma</strong> received crop recommendations</p>
-                                    <span class="activity-time">5 hours ago</span>
-                                </div>
-                            </div>
-                            <div class="activity-item">
-                                <div class="activity-icon">
-                                    <i class="fas fa-bug"></i>
-                                </div>
-                                <div class="activity-content">
-                                    <p>New pest alert generated for <strong>Northern region</strong></p>
-                                    <span class="activity-time">Yesterday</span>
-                                </div>
-                            </div>
-                            <div class="activity-item">
-                                <div class="activity-icon">
-                                    <i class="fas fa-cloud-rain"></i>
-                                </div>
-                                <div class="activity-content">
-                                    <p>Weather alert sent to <strong>125 farmers</strong></p>
-                                    <span class="activity-time">2 days ago</span>
-                                </div>
-                            </div>
-                            <div class="activity-item">
-                                <div class="activity-icon">
-                                    <i class="fas fa-question-circle"></i>
-                                </div>
-                                <div class="activity-content">
-                                    <p><strong>Vikram Singh</strong> submitted a new query</p>
-                                    <span class="activity-time">3 days ago</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="status-card">
-                        <div class="card-header">
-                            <h3>System Status</h3>
-                        </div>
-                        <div class="status-list">
-                            <div class="status-item online">
-                                <div class="status-indicator"></div>
-                                <div class="status-content">
-                                    <p>Web Server</p>
-                                    <span>Operational</span>
-                                </div>
-                            </div>
-                            <div class="status-item online">
-                                <div class="status-indicator"></div>
-                                <div class="status-content">
-                                    <p>Database</p>
-                                    <span>Operational</span>
-                                </div>
-                            </div>
-                            <div class="status-item warning">
-                                <div class="status-indicator"></div>
-                                <div class="status-content">
-                                    <p>API Services</p>
-                                    <span>High Load</span>
-                                </div>
-                            </div>
-                            <div class="status-item online">
-                                <div class="status-indicator"></div>
-                                <div class="status-content">
-                                    <p>Notification System</p>
-                                    <span>Operational</span>
-                                </div>
-                            </div>
-                            <div class="status-item error">
-                                <div class="status-indicator"></div>
-                                <div class="status-content">
-                                    <p>Backup System</p>
-                                    <span>Not Working</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="system-actions">
-                            <button class="btn btn-primary">
-                                <i class="fas fa-sync"></i>
-                                Run Backup Now
-                            </button>
-                            <button class="btn btn-secondary">
-                                <i class="fas fa-cog"></i>
-                                System Settings
-                            </button>
-                        </div>
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <h3>Quick Actions</h3>
+                    <div class="actions-grid">
+                        <a href="admin-users.html" class="action-card">
+                            <i class="fas fa-users"></i>
+                            <span>Manage Users</span>
+                        </a>
+                        <a href="admin-content.html" class="action-card">
+                            <i class="fas fa-edit"></i>
+                            <span>Manage Content</span>
+                        </a>
+                        <a href="admin-notifications.html" class="action-card">
+                            <i class="fas fa-bell"></i>
+                            <span>Send Alerts</span>
+                        </a>
+                        <a href="admin-analytics.html" class="action-card">
+                            <i class="fas fa-chart-line"></i>
+                            <span>View Analytics</span>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -302,5 +205,25 @@
     </div>
 
     <script src="admin.js"></script>
+    <script>
+        // Load dashboard stats
+        async function loadDashboardStats() {
+            try {
+                const response = await fetch('http://localhost:5000/api/dashboard/stats');
+                const data = await response.json();
+                document.getElementById('totalUsers').textContent = data.totalUsers || 0;
+                document.getElementById('totalCrops').textContent = data.totalCrops || 0;
+                document.getElementById('totalYieldRecords').textContent = data.totalYieldRecords || 0;
+                document.getElementById('totalAlerts').textContent = data.totalAlerts || 0;
+                document.getElementById('totalFAQs').textContent = data.totalFAQs || 0;
+                document.getElementById('totalKnowledgeBase').textContent = data.totalKnowledgeBase || 0;
+                document.getElementById('totalCropCalendar').textContent = data.totalCropCalendar || 0;
+                document.getElementById('totalFertilizers').textContent = data.totalFertilizers || 0;
+            } catch (error) {
+                console.error('Error loading stats:', error);
+            }
+        }
+        document.addEventListener('DOMContentLoaded', loadDashboardStats);
+    </script>
 </body>
 </html>

@@ -20,6 +20,7 @@
                     <li><a href="croprecommendations.html"><i class="fas fa-seedling"></i> Crop Recommendations</a></li>
                     <li><a href="fertilizeradvice.html"><i class="fas fa-flask"></i> Fertilizer Advice</a></li>
                     <li><a href="yieldrecords.html"><i class="fas fa-chart-line"></i> Yield Records</a></li>
+                    <li><a href="cropcalendar.html"><i class="fas fa-calendar-alt"></i> Crop Calendar</a></li>
                     <li><a href="chatbot.html"><i class="fas fa-robot"></i> Chatbot</a></li>
                     <li><a href="knowledgebase.html"><i class="fas fa-book"></i> Knowledge Base</a></li>
                     <li><a href="faq.html"><i class="fas fa-question-circle"></i> FAQs</a></li>
@@ -33,7 +34,7 @@
         <main class="main-content">
             <header class="top-bar">
                 <div class="search-box">
-                    <input type="text" placeholder="Search...">
+                    <input type="text" id="search-input" placeholder="Search...">
                     <i class="fas fa-search"></i>
                 </div>
                 <div class="user-info">
@@ -93,10 +94,15 @@
                         <div class="form-group">
                             <label for="soilType">Soil Type:</label>
                             <select id="soilType">
-                                <option value="clay">Clay</option>
-                                <option value="sandy">Sandy</option>
-                                <option value="loamy">Loamy</option>
-                                <option value="silty">Silty</option>
+                                <option value="Clay">Clay</option>
+                                <option value="Sandy">Sandy</option>
+                                <option value="Loamy">Loamy</option>
+                                <option value="Silty">Silty</option>
+                                <option value="Peaty">Peaty</option>
+                                <option value="Chalky">Chalky</option>
+                                <option value="Saline">Saline</option>
+                                <option value="Red">Red</option>
+                                <option value="Black">Black</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -115,19 +121,47 @@
                         <div class="form-group">
                             <label for="cropType">Crop Type:</label>
                             <select id="cropType">
-                                <option value="wheat">Wheat</option>
-                                <option value="rice">Rice</option>
-                                <option value="corn">Corn</option>
-                                <option value="sugarcane">Sugarcane</option>
+                                <option value="Rice">Rice</option>
+                                <option value="Maize">Maize</option>
+                                <option value="Wheat">Wheat</option>
+                                <option value="Barley">Barley</option>
+                                <option value="Sugarcane">Sugarcane</option>
+                                <option value="Cotton">Cotton</option>
+                                <option value="Oats">Oats</option>
+                                <option value="Groundnut">Groundnut</option>
+                                <option value="Soybean">Soybean</option>
+                                <option value="Turmeric">Turmeric</option>
+                                <option value="Ginger">Ginger</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="soilTypeFert">Soil Type:</label>
                             <select id="soilTypeFert">
-                                <option value="clay">Clay</option>
-                                <option value="sandy">Sandy</option>
-                                <option value="loamy">Loamy</option>
-                                <option value="silty">Silty</option>
+                                <option value="Clay">Clay</option>
+                                <option value="Sandy">Sandy</option>
+                                <option value="Loamy">Loamy</option>
+                                <option value="Silty">Silty</option>
+                                <option value="Peaty">Peaty</option>
+                                <option value="Chalky">Chalky</option>
+                                <option value="Saline">Saline</option>
+                                <option value="Red">Red</option>
+                                <option value="Black">Black</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="nutrientDeficiency">Nutrient Deficiency:</label>
+                            <select id="nutrientDeficiency">
+                                <option value="Nitrogen">Nitrogen</option>
+                                <option value="Phosphorus">Phosphorus</option>
+                                <option value="Potassium">Potassium</option>
+                                <option value="Zinc">Zinc</option>
+                                <option value="Iron">Iron</option>
+                                <option value="Calcium">Calcium</option>
+                                <option value="Magnesium">Magnesium</option>
+                                <option value="Boron">Boron</option>
+                                <option value="Manganese">Manganese</option>
+                                <option value="Copper">Copper</option>
+                                <option value="Molybdenum">Molybdenum</option>
                             </select>
                         </div>
                         <button class="btn btn-primary">Get Fertilizer Advice</button>
@@ -145,42 +179,26 @@
                                 <input type="text" placeholder="Ask a question...">
                                 <button><i class="fas fa-paper-plane"></i></button>
                             </div>
+                            <div class="chat-suggestions">
+                                <button class="suggestion-btn" data-message="What crops should I plant?">🌱 Crop Recommendations</button>
+                                <button class="suggestion-btn" data-message="How to manage pests?">🐛 Pest Control</button>
+                                <button class="suggestion-btn" data-message="Fertilizer advice">💧 Fertilizer Tips</button>
+                                <button class="suggestion-btn" data-message="Show me statistics">📊 Farm Stats</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h2><i class="fas fa-chart-line"></i> Recent Yield Records</h2>
+                        <div id="recent-yields" class="yield-records-list">
+                            <p>Loading recent yields...</p>
                         </div>
                     </div>
 
                     <div class="card">
                         <h2><i class="fas fa-bell"></i> Recent Alerts</h2>
                         <div class="alerts-list">
-                            <div class="alert-item">
-                                <div class="alert-icon">
-                                    <i class="fas fa-cloud-rain"></i>
-                                </div>
-                                <div class="alert-content">
-                                    <h4>Rainfall Alert</h4>
-                                    <p>Heavy rainfall expected in your area in next 48 hours.</p>
-                                    <span class="alert-time">2 hours ago</span>
-                                </div>
-                            </div>
-                            <div class="alert-item">
-                                <div class="alert-icon">
-                                    <i class="fas fa-bug"></i>
-                                </div>
-                                <div class="alert-content">
-                                    <h4>Pest Warning</h4>
-                                    <p>Increased locust activity reported in your region.</p>
-                                    <span class="alert-time">1 day ago</span>
-                                </div>
-                            </div>
-                            <div class="alert-item">
-                                <div class="alert-icon">
-                                    <i class="fas fa-seedling"></i>
-                                </div>
-                                <div class="alert-content">
-                                    <h4>Planting Season</h4>
-                                    <p>Optimal time for planting wheat is approaching.</p>
-                                    <span class="alert-time">3 days ago</span>
-                                </div>
-                            </div>
+                            <p>Loading alerts...</p>
                         </div>
                     </div>
                 </div>

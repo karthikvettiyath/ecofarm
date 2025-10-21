@@ -19,6 +19,7 @@
                     <li><a href="croprecommendations.html"><i class="fas fa-seedling"></i> Crop Recommendations</a></li>
                     <li><a href="fertilizeradvice.html"><i class="fas fa-flask"></i> Fertilizer Advice</a></li>
                     <li><a href="yieldrecords.html"><i class="fas fa-chart-line"></i> Yield Records</a></li>
+                    <li><a href="cropcalendar.html"><i class="fas fa-calendar-alt"></i> Crop Calendar</a></li>
                     <li><a href="chatbot.html"><i class="fas fa-robot"></i> Chatbot</a></li>
                     <li><a href="knowledgebase.html"><i class="fas fa-book"></i> Knowledge Base</a></li>
                     <li class="active"><a href="faq.html"><i class="fas fa-question-circle"></i> FAQs</a></li>
@@ -48,28 +49,11 @@
                 </div>
 
                 <div class="card faqs-container">
-                    <h2><i class="fas fa-question-circle"></i> General Questions</h2>
-                    <div class="faq-list">
-                        <div class="faq-item">
-                            <h4>How can I get a crop recommendation?</h4>
-                            <p>You can get a personalized crop recommendation by navigating to the "Crop Recommendations" section on your dashboard and entering your soil type, temperature, and rainfall data.</p>
-                        </div>
-                        <div class="faq-item">
-                            <h4>Is the fertilizer advice accurate?</h4>
-                            <p>Our fertilizer advice is based on data-driven insights and agricultural best practices. For best results, we recommend a physical soil test to supplement our recommendations.</p>
-                        </div>
-                        <div class="faq-item">
-                            <h4>What types of alerts will I receive?</h4>
-                            <p>You will receive real-time alerts for critical events such as weather changes, pest and disease outbreaks, and market price trends for your registered crops.</p>
-                        </div>
-                        <div class="faq-item">
-                            <h4>How do I contact an agricultural expert?</h4>
-                            <p>The chatbot can provide immediate assistance. For more detailed queries, you can use our feedback form to send a message, and an expert will get back to you.</p>
-                        </div>
-                        <div class="faq-item">
-                            <h4>Can I access the platform on my mobile phone?</h4>
-                            <p>Yes, the Eco-Farm Manager is a web-based platform designed to be fully responsive and accessible on all mobile devices.</p>
-                        </div>
+                    <h2><i class="fas fa-question-circle"></i> Frequently Asked Questions</h2>
+                    <div id="faqLoading" class="loading">Loading FAQs...</div>
+                    <div id="faqError" class="error-message" style="display: none;"></div>
+                    <div class="faq-list" id="faqList">
+                        <!-- FAQs will be loaded here dynamically -->
                     </div>
                 </div>
             </div>
@@ -78,7 +62,66 @@
 
     <script src="dashboard.js"></script>
     <script>
+        // API base URL
+        const API_BASE = 'http://localhost:5000/api';
+
+        // Load FAQs from API
+        async function loadFAQs() {
+            const loadingEl = document.getElementById('faqLoading');
+            const errorEl = document.getElementById('faqError');
+            const faqListEl = document.getElementById('faqList');
+
+            try {
+                const response = await fetch(`${API_BASE}/faqs`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const faqs = await response.json();
+
+                loadingEl.style.display = 'none';
+
+                if (faqs.length === 0) {
+                    faqListEl.innerHTML = '<p class="no-data">No FAQs available at the moment.</p>';
+                    return;
+                }
+
+                // Group FAQs by category
+                const faqsByCategory = {};
+                faqs.forEach(faq => {
+                    if (!faqsByCategory[faq.category]) {
+                        faqsByCategory[faq.category] = [];
+                    }
+                    faqsByCategory[faq.category].push(faq);
+                });
+
+                // Render FAQs grouped by category
+                let html = '';
+                Object.keys(faqsByCategory).forEach(category => {
+                    html += `<h3>${category}</h3>`;
+                    faqsByCategory[category].forEach(faq => {
+                        html += `
+                            <div class="faq-item">
+                                <h4>${faq.question}</h4>
+                                <p>${faq.answer}</p>
+                            </div>
+                        `;
+                    });
+                });
+
+                faqListEl.innerHTML = html;
+
+            } catch (error) {
+                console.error('Error loading FAQs:', error);
+                loadingEl.style.display = 'none';
+                errorEl.style.display = 'block';
+                errorEl.textContent = 'Failed to load FAQs. Please try again later.';
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
+            // Load FAQs when page loads
+            loadFAQs();
+
             const faqSearch = document.getElementById('faqSearch');
             faqSearch.addEventListener('input', function() {
                 const searchValue = faqSearch.value.toLowerCase();

@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eco-Farm Manager - Crop Calendar</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="logo">
+                <h2><i class="fas fa-leaf"></i> Eco-Farm</h2>
+            </div>
+            <nav class="menu">
+                <ul>
+                    <li><a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="croprecommendations.html"><i class="fas fa-seedling"></i> Crop Recommendations</a></li>
+                    <li><a href="fertilizeradvice.html"><i class="fas fa-flask"></i> Fertilizer Advice</a></li>
+                    <li><a href="yieldrecords.html"><i class="fas fa-chart-line"></i> Yield Records</a></li>
+                    <li><a href="cropcalendar.html"><i class="fas fa-calendar-alt"></i> Crop Calendar</a></li>
+                    <li><a href="chatbot.html"><i class="fas fa-robot"></i> Chatbot</a></li>
+                    <li><a href="knowledgebase.html"><i class="fas fa-book"></i> Knowledge Base</a></li>
+                    <li><a href="faq.html"><i class="fas fa-question-circle"></i> FAQs</a></li>
+                    <li><a href="alerts.html"><i class="fas fa-bell"></i> Alerts</a></li>
+                    <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+                    <li><a href="#" id="logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-bar">
+                <div class="search-box">
+                    <input type="text" placeholder="Search crops...">
+                    <i class="fas fa-search"></i>
+                </div>
+                <div class="user-info">
+                    <img src="https://ui-avatars.com/api/?name=Farmer+User&background=4caf50&color=fff" alt="User">
+                    <span>Welcome, Farmer!</span>
+                </div>
+            </header>
+
+            <div class="content">
+                <div class="welcome-banner">
+                    <h1>Crop Calendar</h1>
+                    <p>Plan your farming activities with seasonal crop calendars and optimal planting times.</p>
+                </div>
+
+                <div class="card full-height-card">
+                    <h2><i class="fas fa-calendar-alt"></i> Seasonal Crop Calendar</h2>
+
+                    <!-- Filters -->
+                    <div class="filters-section">
+                        <div class="filter-group">
+                            <label for="seasonFilter">Filter by Season:</label>
+                            <select id="seasonFilter">
+                                <option value="">All Seasons</option>
+                                <option value="Kharif">Kharif (June-October)</option>
+                                <option value="Rabi">Rabi (October-March)</option>
+                                <option value="Summer">Summer (March-June)</option>
+                                <option value="Autumn">Autumn (September-December)</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="regionFilter">Filter by Region:</label>
+                            <select id="regionFilter">
+                                <option value="">All Regions</option>
+                                <option value="North India">North India</option>
+                                <option value="South India">South India</option>
+                                <option value="West India">West India</option>
+                                <option value="East India">East India</option>
+                                <option value="All India">All India</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Crop Calendar Table -->
+                    <div class="table-container">
+                        <table id="cropCalendarTable" class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Crop Name</th>
+                                    <th>Scientific Name</th>
+                                    <th>Planting Season</th>
+                                    <th>Harvesting Season</th>
+                                    <th>Duration (Days)</th>
+                                    <th>Soil Type</th>
+                                    <th>Temperature</th>
+                                    <th>Rainfall</th>
+                                    <th>Region</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="cropCalendarBody">
+                                <!-- Data will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Loading indicator -->
+                    <div id="loadingIndicator" class="loading">
+                        <i class="fas fa-spinner fa-spin"></i> Loading crop calendar...
+                    </div>
+
+                    <!-- No data message -->
+                    <div id="noDataMessage" class="no-data" style="display: none;">
+                        <i class="fas fa-calendar-times"></i>
+                        <h3>No crops found</h3>
+                        <p>Try adjusting your filters or check back later.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Crop Details Modal -->
+    <div id="cropModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Crop Details</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Crop details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="dashboard.js"></script>
+    <script>
+        // Crop Calendar specific functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCropCalendar();
+
+            // Filter functionality
+            document.getElementById('seasonFilter').addEventListener('change', filterCrops);
+            document.getElementById('regionFilter').addEventListener('change', filterCrops);
+
+            // Search functionality
+            const searchInput = document.querySelector('.search-box input');
+            searchInput.addEventListener('input', function() {
+                const query = this.value.toLowerCase();
+                filterCropsBySearch(query);
+            });
+        });
+
+        function loadCropCalendar() {
+            fetch('http://localhost:5000/api/crop-calendar')
+                .then(response => response.json())
+                .then(data => {
+                    displayCropCalendar(data);
+                })
+                .catch(error => {
+                    console.error('Error loading crop calendar:', error);
+                    showError('Failed to load crop calendar. Please try again.');
+                });
+        }
+
+        function displayCropCalendar(crops) {
+            const tbody = document.getElementById('cropCalendarBody');
+            const loading = document.getElementById('loadingIndicator');
+            const noData = document.getElementById('noDataMessage');
+
+            loading.style.display = 'none';
+
+            if (crops.length === 0) {
+                noData.style.display = 'block';
+                tbody.innerHTML = '';
+                return;
+            }
+
+            noData.style.display = 'none';
+
+            const html = crops.map(crop => `
+                <tr>
+                    <td>${crop.crop_name}</td>
+                    <td><em>${crop.scientific_name || 'N/A'}</em></td>
+                    <td>${crop.planting_season}</td>
+                    <td>${crop.harvesting_season}</td>
+                    <td>${crop.duration_days || 'N/A'}</td>
+                    <td>${crop.soil_type}</td>
+                    <td>${crop.temperature_range}</td>
+                    <td>${crop.rainfall_requirement}</td>
+                    <td>${crop.region}</td>
+                    <td>
+                        <button class="btn btn-small" onclick="showCropDetails(${crop.id})">
+                            <i class="fas fa-info-circle"></i> Details
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+
+            tbody.innerHTML = html;
+        }
+
+        function filterCrops() {
+            const seasonFilter = document.getElementById('seasonFilter').value;
+            const regionFilter = document.getElementById('regionFilter').value;
+
+            let url = 'http://localhost:5000/api/crop-calendar?';
+
+            if (seasonFilter) url += `season=${encodeURIComponent(seasonFilter)}&`;
+            if (regionFilter) url += `region=${encodeURIComponent(regionFilter)}&`;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    displayCropCalendar(data);
+                })
+                .catch(error => {
+                    console.error('Error filtering crops:', error);
+                });
+        }
+
+        function filterCropsBySearch(query) {
+            const rows = document.querySelectorAll('#cropCalendarBody tr');
+
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(query) ? '' : 'none';
+            });
+        }
+
+        function showCropDetails(cropId) {
+            fetch(`http://localhost:5000/api/crop-calendar/${cropId}`)
+                .then(response => response.json())
+                .then(crop => {
+                    const modal = document.getElementById('cropModal');
+                    const modalBody = document.getElementById('modalBody');
+
+                    modalBody.innerHTML = `
+                        <div class="crop-details">
+                            <div class="detail-section">
+                                <h4><i class="fas fa-seedling"></i> Basic Information</h4>
+                                <p><strong>Crop:</strong> ${crop.crop_name}</p>
+                                <p><strong>Scientific Name:</strong> <em>${crop.scientific_name || 'N/A'}</em></p>
+                                <p><strong>Duration:</strong> ${crop.duration_days || 'N/A'} days</p>
+                                <p><strong>Region:</strong> ${crop.region}</p>
+                            </div>
+
+                            <div class="detail-section">
+                                <h4><i class="fas fa-calendar-alt"></i> Seasonal Information</h4>
+                                <p><strong>Planting Season:</strong> ${crop.planting_season}</p>
+                                <p><strong>Harvesting Season:</strong> ${crop.harvesting_season}</p>
+                            </div>
+
+                            <div class="detail-section">
+                                <h4><i class="fas fa-thermometer-half"></i> Optimal Conditions</h4>
+                                <p><strong>Temperature Range:</strong> ${crop.temperature_range}</p>
+                                <p><strong>Rainfall Requirement:</strong> ${crop.rainfall_requirement}</p>
+                                <p><strong>Soil Type:</strong> ${crop.soil_type}</p>
+                            </div>
+
+                            <div class="detail-section">
+                                <h4><i class="fas fa-tasks"></i> Key Activities</h4>
+                                <p>${crop.key_activities}</p>
+                            </div>
+
+                            <div class="detail-section">
+                                <h4><i class="fas fa-info-circle"></i> Additional Information</h4>
+                                <p>${crop.optimal_conditions}</p>
+                            </div>
+                        </div>
+                    `;
+
+                    modal.style.display = 'block';
+                })
+                .catch(error => {
+                    console.error('Error loading crop details:', error);
+                    alert('Failed to load crop details. Please try again.');
+                });
+        }
+
+        // Modal close functionality
+        document.querySelector('.close').addEventListener('click', function() {
+            document.getElementById('cropModal').style.display = 'none';
+        });
+
+        window.addEventListener('click', function(event) {
+            const modal = document.getElementById('cropModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        function showError(message) {
+            const tbody = document.getElementById('cropCalendarBody');
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="10" class="error-message">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        ${message}
+                    </td>
+                </tr>
+            `;
+        }
+    </script>
+</body>
+</html>

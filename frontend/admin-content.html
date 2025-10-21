@@ -103,219 +103,195 @@
             <div class="admin-content">
                 <div class="content-tabs">
                     <button class="tab-btn active" data-tab="faqs">FAQs</button>
-                    <button class="tab-btn" data-tab="guides">Farming Guides</button>
-                    <button class="tab-btn" data-tab="articles">Articles</button>
-                    <button class="tab-btn" data-tab="alerts">Alert Templates</button>
+                    <button class="tab-btn" data-tab="alerts">Alerts</button>
+                    <button class="tab-btn" data-tab="crop-calendar">Crop Calendar</button>
                 </div>
 
                 <!-- FAQs Management -->
                 <div class="tab-content active" id="faqs">
                     <div class="content-header">
                         <div class="header-actions">
-                            <button class="btn btn-primary" id="addFaqBtn">
+                            <button class="btn btn-primary" id="addFAQBtn">
                                 <i class="fas fa-plus"></i>
                                 Add New FAQ
                             </button>
-                            <div class="header-filters">
-                                <select class="filter-select">
-                                    <option>All Categories</option>
-                                    <option>Crops</option>
-                                    <option>Fertilizers</option>
-                                    <option>Pest Control</option>
-                                    <option>Weather</option>
-                                </select>
-                                <select class="filter-select">
-                                    <option>Sort by: Newest</option>
-                                    <option>Sort by: Oldest</option>
-                                    <option>Sort by: Most Viewed</option>
-                                </select>
-                            </div>
                         </div>
                     </div>
 
-                    <div class="data-card">
-                        <div class="table-responsive">
-                            <table class="data-table">
-                                <thead>
-                                    <tr>
-                                        <th>Question</th>
-                                        <th>Category</th>
-                                        <th>Status</th>
-                                        <th>Views</th>
-                                        <th>Last Updated</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>How often should I water my crops during summer?</td>
-                                        <td>Crops</td>
-                                        <td><span class="status-badge active">Published</span></td>
-                                        <td>1,245</td>
-                                        <td>2 days ago</td>
-                                        <td>
-                                            <div class="action-buttons">
-                                                <button class="btn-icon" title="Edit">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
-                                                <button class="btn-icon" title="View">
-                                                    <i class="fas fa-eye"></i>
-                                                </button>
-                                                <button class="btn-icon btn-delete" title="Delete">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>What is the best fertilizer for wheat cultivation?</td>
-                                        <td>Fertilizers</td>
-                                        <td><span class="status-badge active">Published</span></td>
-                                        <td>987</td>
-                                        <td>1 week ago</td>
-                                        <td>
-                                            <div class="action-buttons">
-                                                <button class="btn-icon" title="Edit">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
-                                                <button class="btn-icon" title="View">
-                                                    <i class="fas fa-eye"></i>
-                                                </button>
-                                                <button class="btn-icon btn-delete" title="Delete">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>How to identify and treat common plant diseases?</td>
-                                        <td>Pest Control</td>
-                                        <td><span class="status-badge draft">Draft</span></td>
-                                        <td>0</td>
-                                        <td>3 days ago</td>
-                                        <td>
-                                            <div class="action-buttons">
-                                                <button class="btn-icon" title="Edit">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
-                                                <button class="btn-icon" title="View">
-                                                    <i class="fas fa-eye"></i>
-                                                </button>
-                                                <button class="btn-icon btn-delete" title="Delete">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>When is the best time to plant rice in northern regions?</td>
-                                        <td>Crops</td>
-                                        <td><span class="status-badge active">Published</span></td>
-                                        <td>756</td>
-                                        <td>2 weeks ago</td>
-                                        <td>
-                                            <div class="action-buttons">
-                                                <button class="btn-icon" title="Edit">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
-                                                <button class="btn-icon" title="View">
-                                                    <i class="fas fa-eye"></i>
-                                                </button>
-                                                <button class="btn-icon btn-delete" title="Delete">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>How to prepare soil for organic farming?</td>
-                                        <td>Fertilizers</td>
-                                        <td><span class="status-badge pending">Pending Review</span></td>
-                                        <td>0</td>
-                                        <td>5 days ago</td>
-                                        <td>
-                                            <div class="action-buttons">
-                                                <button class="btn-icon" title="Edit">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
-                                                <button class="btn-icon" title="View">
-                                                    <i class="fas fa-eye"></i>
-                                                </button>
-                                                <button class="btn-icon btn-delete" title="Delete">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <!-- Pagination -->
-                        <div class="pagination">
-                            <button class="pagination-btn" disabled>
-                                <i class="fas fa-chevron-left"></i>
-                            </button>
-                            <button class="pagination-btn active">1</button>
-                            <button class="pagination-btn">2</button>
-                            <button class="pagination-btn">3</button>
-                            <span class="pagination-ellipsis">...</span>
-                            <button class="pagination-btn">8</button>
-                            <button class="pagination-btn">
-                                <i class="fas fa-chevron-right"></i>
-                            </button>
+                    <!-- FAQ Form Container (Hidden by default) -->
+                    <div class="form-container" id="faqFormContainer" style="display: none;">
+                        <div class="form-card">
+                            <h3 id="faqFormTitle">Add New FAQ</h3>
+                            <form id="faqForm">
+                                <div class="form-group">
+                                    <label for="faqQuestion">Question *</label>
+                                    <input type="text" id="faqQuestion" required placeholder="Enter the question">
+                                </div>
+                                <div class="form-group">
+                                    <label for="faqAnswer">Answer *</label>
+                                    <textarea id="faqAnswer" rows="4" required placeholder="Enter the detailed answer"></textarea>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="faqCategory">Category</label>
+                                        <input type="text" id="faqCategory" placeholder="e.g., Crops, Fertilizers">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="faqStatus">Status</label>
+                                        <select id="faqStatus">
+                                            <option value="active">Active</option>
+                                            <option value="inactive">Inactive</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-actions">
+                                    <button type="button" class="btn btn-secondary" id="cancelFAQBtn">Cancel</button>
+                                    <button type="submit" class="btn btn-primary">Save FAQ</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
-                </div>
 
-                <!-- Farming Guides (Hidden by default) -->
-                <div class="tab-content" id="guides">
-                    <div class="content-header">
-                        <h2>Farming Guides Management</h2>
-                        <button class="btn btn-primary">
-                            <i class="fas fa-plus"></i>
-                            Add New Guide
-                        </button>
-                    </div>
-                    <div class="empty-state">
-                        <i class="fas fa-book-open"></i>
-                        <h3>No Farming Guides Yet</h3>
-                        <p>Get started by creating your first farming guide for farmers.</p>
-                        <button class="btn btn-primary">Create Guide</button>
+                    <!-- FAQs List -->
+                    <div id="faqsList" class="content-list">
+                        <!-- FAQs will be loaded here dynamically -->
                     </div>
                 </div>
 
-                <!-- Articles (Hidden by default) -->
-                <div class="tab-content" id="articles">
-                    <div class="content-header">
-                        <h2>Articles Management</h2>
-                        <button class="btn btn-primary">
-                            <i class="fas fa-plus"></i>
-                            Add New Article
-                        </button>
-                    </div>
-                    <div class="empty-state">
-                        <i class="fas fa-newspaper"></i>
-                        <h3>No Articles Yet</h3>
-                        <p>Start writing articles to help farmers with the latest agricultural practices.</p>
-                        <button class="btn btn-primary">Write Article</button>
-                    </div>
-                </div>
-
-                <!-- Alert Templates (Hidden by default) -->
+                <!-- Alerts Management -->
                 <div class="tab-content" id="alerts">
                     <div class="content-header">
-                        <h2>Alert Templates Management</h2>
-                        <button class="btn btn-primary">
-                            <i class="fas fa-plus"></i>
-                            Add New Template
-                        </button>
+                        <div class="header-actions">
+                            <button class="btn btn-primary" id="addAlertBtn">
+                                <i class="fas fa-plus"></i>
+                                Add New Alert
+                            </button>
+                        </div>
                     </div>
-                    <div class="empty-state">
-                        <i class="fas fa-bell"></i>
-                        <h3>No Alert Templates Yet</h3>
-                        <p>Create templates for weather, pest, and market alerts to keep farmers informed.</p>
-                        <button class="btn btn-primary">Create Template</button>
+
+                    <!-- Alert Form Container (Hidden by default) -->
+                    <div class="form-container" id="alertFormContainer" style="display: none;">
+                        <div class="form-card">
+                            <h3 id="alertFormTitle">Add New Alert</h3>
+                            <form id="alertForm">
+                                <div class="form-group">
+                                    <label for="alertTitle">Title *</label>
+                                    <input type="text" id="alertTitle" required placeholder="Enter alert title">
+                                </div>
+                                <div class="form-group">
+                                    <label for="alertMessage">Message *</label>
+                                    <textarea id="alertMessage" rows="4" required placeholder="Enter alert message"></textarea>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="alertType">Type</label>
+                                        <select id="alertType">
+                                            <option value="info">Info</option>
+                                            <option value="warning">Warning</option>
+                                            <option value="danger">Danger</option>
+                                            <option value="success">Success</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="alertStatus">Status</label>
+                                        <select id="alertStatus">
+                                            <option value="new">New</option>
+                                            <option value="active">Active</option>
+                                            <option value="archived">Archived</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-actions">
+                                    <button type="button" class="btn btn-secondary" id="cancelAlertBtn">Cancel</button>
+                                    <button type="submit" class="btn btn-primary">Save Alert</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Alerts List -->
+                    <div id="alertsList" class="content-list">
+                        <!-- Alerts will be loaded here dynamically -->
+                    </div>
+                </div>
+
+                <!-- Crop Calendar Management -->
+                <div class="tab-content" id="crop-calendar">
+                    <div class="content-header">
+                        <div class="header-actions">
+                            <button class="btn btn-primary" id="addCropBtn">
+                                <i class="fas fa-plus"></i>
+                                Add New Crop
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Crop Form Container (Hidden by default) -->
+                    <div class="form-container" id="cropFormContainer" style="display: none;">
+                        <div class="form-card">
+                            <h3 id="cropFormTitle">Add New Crop</h3>
+                            <form id="cropForm">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="cropName">Crop Name *</label>
+                                        <input type="text" id="cropName" required placeholder="e.g., Wheat, Rice">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="scientificName">Scientific Name</label>
+                                        <input type="text" id="scientificName" placeholder="e.g., Triticum aestivum">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="plantingSeason">Planting Season *</label>
+                                        <input type="text" id="plantingSeason" required placeholder="e.g., October-November">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="harvestingSeason">Harvesting Season *</label>
+                                        <input type="text" id="harvestingSeason" required placeholder="e.g., March-April">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="durationDays">Duration (Days)</label>
+                                        <input type="number" id="durationDays" placeholder="e.g., 120">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="region">Region</label>
+                                        <input type="text" id="region" placeholder="e.g., Northern India">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="soilType">Soil Type</label>
+                                    <input type="text" id="soilType" placeholder="e.g., Loamy, Clay">
+                                </div>
+                                <div class="form-group">
+                                    <label for="temperatureRange">Temperature Range</label>
+                                    <input type="text" id="temperatureRange" placeholder="e.g., 15-25°C">
+                                </div>
+                                <div class="form-group">
+                                    <label for="rainfallRequirement">Rainfall Requirement</label>
+                                    <input type="text" id="rainfallRequirement" placeholder="e.g., 500-800mm">
+                                </div>
+                                <div class="form-group">
+                                    <label for="keyActivities">Key Activities</label>
+                                    <textarea id="keyActivities" rows="3" placeholder="Describe key farming activities"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="optimalConditions">Optimal Conditions</label>
+                                    <textarea id="optimalConditions" rows="3" placeholder="Describe optimal growing conditions"></textarea>
+                                </div>
+                                <div class="form-actions">
+                                    <button type="button" class="btn btn-secondary" id="cancelCropBtn">Cancel</button>
+                                    <button type="submit" class="btn btn-primary">Save Crop</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Crop Calendar List -->
+                    <div id="cropCalendarList" class="content-list">
+                        <!-- Crops will be loaded here dynamically -->
                     </div>
                 </div>
             </div>

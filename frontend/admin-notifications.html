@@ -37,22 +37,66 @@
 				<div class="notification-send">
 					<h2>Send Notification</h2>
 					<form id="sendNotificationForm">
-						<input type="text" placeholder="Notification Title" required>
-						<textarea placeholder="Notification Message" required></textarea>
+						<input type="text" id="alertTitle" placeholder="Notification Title" required>
+						<textarea id="alertMessage" placeholder="Notification Message" required></textarea>
+						<select id="alertType">
+							<option value="info">Info</option>
+							<option value="warning">Warning</option>
+							<option value="danger">Danger</option>
+							<option value="success">Success</option>
+						</select>
 						<button type="submit" class="btn btn-primary">Send</button>
 					</form>
 				</div>
 				<div class="notification-list">
 					<h2>Recent Notifications</h2>
-					<ul>
-						<li><strong>Weather Alert:</strong> Heavy rain expected tomorrow. <span class="date">2025-09-05</span></li>
-						<li><strong>System Update:</strong> New crop recommendation model deployed. <span class="date">2025-09-03</span></li>
-						<li><strong>Pest Warning:</strong> Increased pest activity in Punjab region. <span class="date">2025-09-01</span></li>
+					<ul id="alertsList">
+						<!-- Alerts will be loaded here -->
 					</ul>
 				</div>
 			</div>
 		</main>
 	</div>
 	<script src="admin.js"></script>
+	<script>
+		// Load alerts
+		async function loadAlerts() {
+			try {
+				const response = await fetch('http://localhost:5000/api/admin/alerts', {
+					headers: { 'x-admin-auth': 'true' }
+				});
+				const alerts = await response.json();
+				const ul = document.getElementById('alertsList');
+				ul.innerHTML = alerts.map(alert => `
+					<li><strong>${alert.title}:</strong> ${alert.message} <span class="date">${new Date(alert.created_at).toLocaleDateString()}</span></li>
+				`).join('');
+			} catch (error) {
+				console.error('Error loading alerts:', error);
+			}
+		}
+
+		// Send notification
+		document.getElementById('sendNotificationForm').addEventListener('submit', async (e) => {
+			e.preventDefault();
+			const title = document.getElementById('alertTitle').value;
+			const message = document.getElementById('alertMessage').value;
+			const type = document.getElementById('alertType').value;
+			try {
+				await fetch('http://localhost:5000/api/admin/alerts', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json', 'x-admin-auth': 'true' },
+					body: JSON.stringify({ title, message, type })
+				});
+				alert('Notification sent!');
+				document.getElementById('sendNotificationForm').reset();
+				loadAlerts();
+			} catch (error) {
+				console.error('Error sending notification:', error);
+				alert('Error sending notification');
+			}
+		});
+
+		document.addEventListener('DOMContentLoaded', loadAlerts);
+	</script>
 </body>
 </html>
