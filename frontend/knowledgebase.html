@@ -32,10 +32,6 @@
 
         <main class="main-content">
             <header class="top-bar">
-                <div class="search-box">
-                    <input type="text" id="searchInput" placeholder="Search farming articles...">
-                    <i class="fas fa-search" id="searchButton"></i>
-                </div>
                 <div class="user-info">
                     <img src="https://ui-avatars.com/api/?name=Farmer+User&background=4caf50&color=fff" alt="User">
                     <span>Welcome, Farmer!</span>
@@ -44,7 +40,7 @@
 
             <div class="content">
                 <div class="welcome-banner">
-                    <h1><i class="fas fa-book"></i> Knowledge Base</h1>
+                    <h1>Welcome to Knowledge Base</h1>
                     <p>Discover expert farming techniques, sustainable practices, and agricultural wisdom</p>
                 </div>
 
@@ -143,16 +139,15 @@
             setupEventListeners();
         }
 
-        function loadArticles(category = 'all', search = '') {
+        function loadArticles(category = 'all') {
             console.log('Loading articles...');
             
             showLoading('articlesList', 'Loading articles...');
             
             let url = 'http://localhost:5000/api/knowledge-base';
-            if (category !== 'all' || search) {
+            if (category !== 'all') {
                 const params = new URLSearchParams();
-                if (category !== 'all') params.append('category', category);
-                if (search) params.append('search', search);
+                params.append('category', category);
                 url += '?' + params.toString();
             }
 
@@ -389,36 +384,12 @@
         }
 
         function setupEventListeners() {
-            const searchButton = document.getElementById('searchButton');
-            const searchInput = document.getElementById('searchInput');
             const categoryFilter = document.getElementById('categoryFilter');
-
-            if (searchButton) {
-                searchButton.addEventListener('click', performSearch);
-            }
-            
-            if (searchInput) {
-                searchInput.addEventListener('keypress', function(e) {
-                    if (e.key === 'Enter') performSearch();
-                });
-            }
 
             if (categoryFilter) {
                 categoryFilter.addEventListener('change', function() {
-                    const searchTerm = document.getElementById('searchInput').value.trim();
-                    loadArticles(this.value, searchTerm);
+                    loadArticles(this.value);
                 });
-            }
-        }
-
-        function performSearch() {
-            const searchInput = document.getElementById('searchInput');
-            const categoryFilter = document.getElementById('categoryFilter');
-            
-            if (searchInput && categoryFilter) {
-                const searchTerm = searchInput.value.trim();
-                const category = categoryFilter.value;
-                loadArticles(category, searchTerm);
             }
         }
 

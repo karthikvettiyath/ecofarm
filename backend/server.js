@@ -34,6 +34,47 @@ app.post('/api/chatbot', (req, res) => {
     res.json({ response });
 });
 
+// Farmer registration
+app.post('/api/register', async (req, res) => {
+    try {
+        const { name, phone, location, password } = req.body;
+
+        // Validation
+        if (!name || !phone || !location || !password) {
+            return res.status(400).json({ error: 'All fields are required' });
+        }
+
+        if (password.length < 6) {
+            return res.status(400).json({ error: 'Password must be at least 6 characters long' });
+        }
+
+        if (!/^\d{10}$/.test(phone)) {
+            return res.status(400).json({ error: 'Phone number must be 10 digits' });
+        }
+
+        // Check if phone already exists
+        const [existing] = await pool.query('SELECT id FROM farmers WHERE phone = ?', [phone]);
+        if (existing.length > 0) {
+            return res.status(400).json({ error: 'Phone number already registered' });
+        }
+
+        // Insert new farmer
+        const [result] = await pool.query(
+            'INSERT INTO farmers (name, phone, location, password, created_at) VALUES (?, ?, ?, ?, NOW())',
+            [name, phone, location, password]
+        );
+
+        res.json({ 
+            success: true, 
+            message: 'Registration successful',
+            farmerId: result.insertId
+        });
+    } catch (e) {
+        console.error('Registration error:', e);
+        res.status(500).json({ error: 'Registration failed' });
+    }
+});
+
 // Dashboard stats
 app.get('/api/dashboard/stats', async (req, res) => {
   try {
@@ -346,6 +387,22 @@ app.get('/api/admin/analytics', requireAdmin, async (req, res) => {
   } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
+// Admin: Settings CRUD
+app.get('/api/admin/settings', requireAdmin, async (req, res) => {
+  try {
+    const [rows] = await pool.query('SELECT * FROM settings ORDER BY category, setting_key');
+    res.json(rows);
+  } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+app.put('/api/admin/settings/:id', requireAdmin, async (req, res) => {
+  try {
+    const { setting_value } = req.body || {};
+    await pool.query('UPDATE settings SET setting_value = ? WHERE id = ?', [setting_value, req.params.id]);
+    res.json({ success: true });
+  } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
 // Default root
 app.get('/', (req, res) => {
     res.json({
@@ -383,27 +440,15 @@ async function columnExists(table, column) {
     return rows[0].cnt > 0;
 }
 
-async function ensureSchema() {
-    try {
-        if (!(await columnExists('faqs', 'status'))) {
-            await pool.query('ALTER TABLE faqs ADD COLUMN status VARCHAR(20) DEFAULT "active"');
-        }
-    } catch (e) { console.warn('Schema ensure (faqs.status) warning:', e.message); }
-    try {
-        if (!(await columnExists('faqs', 'views'))) {
-            await pool.query('ALTER TABLE faqs ADD COLUMN views INT DEFAULT 0');
-        }
-    } catch (e) { console.warn('Schema ensure (faqs.views) warning:', e.message); }
-    try {
-        if (!(await columnExists('knowledge_base', 'author'))) {
-            await pool.query('ALTER TABLE knowledge_base ADD COLUMN author VARCHAR(100) NULL');
-        }
-    } catch (e) { console.warn('Schema ensure (knowledge_base.author) warning:', e.message); }
-    try {
-        if (!(await columnExists('knowledge_base', 'views'))) {
-            await pool.query('ALTER TABLE knowledge_base ADD COLUMN views INT DEFAULT 0');
-        }
-    } catch (e) { console.warn('Schema ensure (knowledge_base.views) warning:', e.message); }
+async function columnExists(table, column) {
+    const [rows] = await pool.query(`
+        SELECT COUNT(*) as cnt 
+        FROM information_schema.COLUMNS 
+        WHERE TABLE_SCHEMA = DATABASE() 
+        AND TABLE_NAME = ? 
+        AND COLUMN_NAME = ?
+    `, [table, column]);
+    return rows[0].cnt > 0;
 }
 
 // Process diagnostics
@@ -419,13 +464,10 @@ process.on('exit', (code) => {
 
 // Start server
 const PORT = process.env.PORT || 5000;
-ensureSchema()
-    .then(() => {
-        app.listen(PORT, () => {
-            console.log(`Server running on http://localhost:${PORT}`);
-        });
-    })
-    .catch((e) => {
-        console.error('Startup error:', e);
-        process.exit(1);
-    });
+app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+})
+.catch((e) => {
+    console.error('Startup error:', e);
+    process.exit(1);
+});

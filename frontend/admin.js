@@ -1,4 +1,4 @@
-
+﻿
 // Admin authentication and routing logic
 document.addEventListener('DOMContentLoaded', function() {
 	// Toggle password visibility
@@ -580,4 +580,21 @@ document.addEventListener('DOMContentLoaded', function() {
 			}
 		});
 	});
+});
+
+// ==================== SEARCH FUNCTIONALITY ====================
+
+
+// Initialize managers when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+// Initialize managers only if we're on the admin content page
+if (document.getElementById('faqsList')) {
+window.faqManager = new FAQManager();
+}
+if (document.getElementById('alertsList')) {
+window.alertManager = new AlertManager();
+}
+if (document.getElementById('cropCalendarList')) {
+window.cropManager = new CropCalendarManager();
+}
 });

@@ -420,23 +420,19 @@ body {
 
 /* Knowledge Base Welcome Banner */
 .knowledgebase .welcome-banner {
-    background: linear-gradient(135deg, #4caf50 0%, #388e3c 100%);
+    background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);
     color: white;
-    text-align: center;
-    padding: 40px 20px;
-    border-radius: 15px;
+    padding: 25px;
+    border-radius: 10px;
     margin-bottom: 30px;
-    box-shadow: 0 8px 25px rgba(76, 175, 80, 0.3);
 }
 
 .knowledgebase .welcome-banner h1 {
-    font-size: 2.5em;
     margin-bottom: 10px;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .knowledgebase .welcome-banner p {
-    font-size: 1.2em;
+    font-size: 1em;
     opacity: 0.9;
     margin: 0;
 }

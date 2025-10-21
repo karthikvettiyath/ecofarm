@@ -127,26 +127,48 @@ document.addEventListener('DOMContentLoaded', function() {
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating account...';
             submitBtn.disabled = true;
             
-            // Simulate API call
-            setTimeout(() => {
-                alert('Registration successful! You can now login with your credentials.');
-                
-                // Switch to login tab
-                tabBtns.forEach(btn => btn.classList.remove('active'));
-                document.querySelector('[data-tab="login"]').classList.add('active');
-                
-                authForms.forEach(form => form.classList.remove('active'));
-                document.getElementById('loginForm').classList.add('active');
-                
-                // Pre-fill login form
-                document.getElementById('loginPhone').value = phone;
-                
+            // Make API call to register farmer
+            fetch('http://localhost:5000/api/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: name,
+                    phone: phone,
+                    location: location,
+                    password: password
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Registration successful! You can now login with your credentials.');
+                    
+                    // Switch to login tab
+                    tabBtns.forEach(btn => btn.classList.remove('active'));
+                    document.querySelector('[data-tab="login"]').classList.add('active');
+                    
+                    authForms.forEach(form => form.classList.remove('active'));
+                    document.getElementById('loginForm').classList.add('active');
+                    
+                    // Pre-fill login form
+                    document.getElementById('loginPhone').value = phone;
+                    
+                    // Reset registration form
+                    registerForm.reset();
+                } else {
+                    alert('Registration failed: ' + (data.error || 'Unknown error'));
+                }
+            })
+            .catch(error => {
+                console.error('Registration error:', error);
+                alert('Registration failed. Please try again.');
+            })
+            .finally(() => {
                 submitBtn.textContent = originalText;
                 submitBtn.disabled = false;
-                
-                // Reset registration form
-                registerForm.reset();
-            }, 1500);
+            });
         });
     }
 });

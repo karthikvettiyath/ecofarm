@@ -1,4 +1,4 @@
-﻿-- Create database
+-- Create database
 CREATE DATABASE IF NOT EXISTS eco_farm_manager;
 USE eco_farm_manager;
 
@@ -117,7 +117,7 @@ INSERT INTO alerts (title, message, type, status) VALUES
 ('Planting Season', 'Optimal time for planting wheat is approaching.', 'info', 'new'),
 ('Fertilizer Reminder', 'Time to apply nitrogen fertilizer for rice crop.', 'info', 'new'),
 ('Market Price Update', 'Wheat prices have increased by 15% in local market.', 'success', 'new'),
-('Weather Advisory', 'Temperature expected to drop below 10Â°C next week.', 'warning', 'new'),
+('Weather Advisory', 'Temperature expected to drop below 10°C next week.', 'warning', 'new'),
 ('Irrigation Alert', 'Check irrigation systems - water levels are low.', 'danger', 'new'),
 ('Crop Disease Alert', 'Blight disease reported in nearby tomato fields.', 'danger', 'new'),
 ('Harvest Reminder', 'Rice harvest season begins next month.', 'info', 'new'),
@@ -136,9 +136,9 @@ CREATE TABLE IF NOT EXISTS knowledge_base (
 
 -- Insert sample knowledge base entries
 INSERT INTO knowledge_base (title, content, category, tags) VALUES
-('Rice Cultivation Guide', 'Rice requires clay or loamy soil with pH 5.5-6.5. Optimal temperature: 20-35Â°C. Water requirement: 1200-1500mm. Planting season: June-July (Kharif) or December-January (Rabi).', 'Crops', 'rice,cultivation,guide,soil,temperature,water'),
-('Wheat Farming Tips', 'Wheat grows best in loamy soil with good drainage. Optimal temperature: 15-20Â°C during growth, 20-25Â°C during grain filling. Requires 450-650mm rainfall. Plant in November-December for Rabi season.', 'Crops', 'wheat,farming,tips,soil,temperature,rainfall'),
-('Maize Production', 'Maize thrives in well-drained loamy soil. Temperature range: 20-30Â°C. Requires 500-800mm rainfall. Plant spacing: 60x25cm. Harvest when kernels are hard and milky layer disappears.', 'Crops', 'maize,production,soil,temperature,rainfall'),
+('Rice Cultivation Guide', 'Rice requires clay or loamy soil with pH 5.5-6.5. Optimal temperature: 20-35°C. Water requirement: 1200-1500mm. Planting season: June-July (Kharif) or December-January (Rabi).', 'Crops', 'rice,cultivation,guide,soil,temperature,water'),
+('Wheat Farming Tips', 'Wheat grows best in loamy soil with good drainage. Optimal temperature: 15-20°C during growth, 20-25°C during grain filling. Requires 450-650mm rainfall. Plant in November-December for Rabi season.', 'Crops', 'wheat,farming,tips,soil,temperature,rainfall'),
+('Maize Production', 'Maize thrives in well-drained loamy soil. Temperature range: 20-30°C. Requires 500-800mm rainfall. Plant spacing: 60x25cm. Harvest when kernels are hard and milky layer disappears.', 'Crops', 'maize,production,soil,temperature,rainfall'),
 ('Fertilizer Application Guide', 'Apply nitrogen fertilizers in split doses - 50% basal, 25% at tillering, 25% at panicle initiation. Phosphorus should be applied at planting. Potassium helps in grain filling and disease resistance.', 'Fertilizers', 'fertilizer,application,nitrogen,phosphorus,potassium'),
 ('Pest Management in Rice', 'Common pests: Stem borer, leaf folder, brown plant hopper. Use integrated pest management: cultural, biological, and chemical controls. Apply neem oil spray for minor infestations.', 'Pests', 'pest,management,rice,stem borer,leaf folder,neem oil'),
 ('Soil Health Management', 'Maintain soil pH between 6.0-7.0. Add organic matter annually. Test soil every 2-3 years. Use crop rotation to prevent nutrient depletion and pest buildup.', 'Soil', 'soil,health,ph,organic matter,crop rotation'),
@@ -166,19 +166,19 @@ CREATE TABLE IF NOT EXISTS crop_calendar (
 
 -- Insert sample crop calendar data
 INSERT INTO crop_calendar (crop_name, scientific_name, planting_season, harvesting_season, duration_days, soil_type, temperature_range, rainfall_requirement, key_activities, optimal_conditions, region) VALUES
-('Rice', 'Oryza sativa', 'June-July (Kharif), December-January (Rabi)', 'October-November (Kharif), April-May (Rabi)', 120, 'Clay/Loamy', '20-35Â°C', '1200-1500mm', 'Land preparation, nursery raising, transplanting, weeding, fertilization, pest control, harvesting', 'Flooded fields, warm and humid climate, pH 5.5-6.5', 'India, Southeast Asia'),
-('Wheat', 'Triticum aestivum', 'October-November (Rabi), March-April (Summer)', 'March-April (Rabi), June-July (Summer)', 120, 'Loamy', '15-20Â°C', '450-650mm', 'Seed bed preparation, sowing, irrigation, fertilization, pest control, harvesting', 'Well-drained soil, cool climate during growth, warm during grain filling', 'North India, Temperate regions'),
-('Maize', 'Zea mays', 'June-July (Kharif), February-March (Rabi)', 'September-October (Kharif), May-June (Rabi)', 90, 'Well-drained Loamy', '20-30Â°C', '500-800mm', 'Land preparation, sowing, thinning, fertilization, irrigation, pest control, harvesting', 'Sunny weather, adequate moisture, pH 6.0-7.0', 'All India, Tropical/Subtropical'),
-('Cotton', 'Gossypium spp.', 'April-May (Kharif), August-September (Summer)', 'November-December (Kharif), January-February (Summer)', 150, 'Black/Red soil', '25-35Â°C', '600-1000mm', 'Seed treatment, sowing, thinning, fertilization, pest management, defoliation, harvesting', 'Warm climate, well-drained soil, adequate sunlight', 'Maharashtra, Gujarat, Andhra Pradesh'),
-('Sugarcane', 'Saccharum officinarum', 'February-March (Spring), September-October (Autumn)', 'December-March (Spring), July-November (Autumn)', 300, 'Deep fertile soil', '20-35Â°C', '1500-2500mm', 'Land preparation, sett treatment, planting, earthing up, fertilization, irrigation, harvesting', 'Fertile soil, adequate water, tropical climate', 'Uttar Pradesh, Maharashtra, Karnataka'),
-('Potatoes', 'Solanum tuberosum', 'September-October (Autumn), January-February (Spring)', 'January-February (Autumn), April-May (Spring)', 90, 'Sandy Loam', '15-20Â°C', '500-700mm', 'Seed treatment, ridge making, planting, earthing up, fertilization, irrigation, harvesting', 'Cool climate, loose soil, adequate moisture', 'Hills of North India, West Bengal'),
-('Tomatoes', 'Solanum lycopersicum', 'June-July (Kharif), December-January (Rabi)', 'October-November (Kharif), March-April (Rabi)', 120, 'Well-drained Loamy', '20-25Â°C', '600-800mm', 'Nursery raising, transplanting, staking, fertilization, pest control, harvesting', 'Warm climate, well-drained soil, full sunlight', 'All India, Protected cultivation'),
-('Onions', 'Allium cepa', 'September-October (Kharif), January-February (Rabi)', 'January-February (Kharif), April-May (Rabi)', 120, 'Fertile Loamy', '15-25Â°C', '400-600mm', 'Seed treatment, sowing/transplanting, thinning, fertilization, irrigation, harvesting', 'Mild climate, fertile soil, good drainage', 'Maharashtra, Karnataka, Tamil Nadu'),
-('Chillies', 'Capsicum annuum', 'January-February (Rabi), June-July (Kharif)', 'April-May (Rabi), September-October (Kharif)', 150, 'Well-drained Loamy', '20-30Â°C', '600-800mm', 'Nursery raising, transplanting, fertilization, pest control, harvesting', 'Warm climate, adequate moisture, full sunlight', 'Andhra Pradesh, Karnataka, West Bengal'),
-('Groundnut', 'Arachis hypogaea', 'June-July (Kharif), January-February (Rabi)', 'September-October (Kharif), April-May (Rabi)', 120, 'Sandy Loam', '25-30Â°C', '500-700mm', 'Seed treatment, sowing, fertilization, weed control, pest management, harvesting', 'Warm climate, well-drained sandy soil', 'Gujarat, Andhra Pradesh, Tamil Nadu'),
-('Soybean', 'Glycine max', 'June-July (Kharif), February-March (Spring)', 'October-November (Kharif), May-June (Spring)', 100, 'Well-drained Loamy', '20-30Â°C', '600-800mm', 'Seed treatment, sowing, fertilization, irrigation, pest control, harvesting', 'Warm humid climate, well-drained soil', 'Madhya Pradesh, Maharashtra, Rajasthan'),
-('Turmeric', 'Curcuma longa', 'April-May (Summer), August-September (Kharif)', 'January-March (Summer), January-March (Kharif)', 240, 'Rich Loamy', '20-30Â°C', '1500-2000mm', 'Rhizome treatment, planting, mulching, fertilization, irrigation, harvesting', 'Humid climate, partial shade, rich organic soil', 'Andhra Pradesh, Odisha, West Bengal'),
-('Ginger', 'Zingiber officinale', 'March-April (Summer), August-September (Kharif)', 'December-February (Summer), December-February (Kharif)', 240, 'Rich Loamy', '20-30Â°C', '1500-2000mm', 'Rhizome treatment, planting, mulching, fertilization, irrigation, harvesting', 'Humid climate, partial shade, rich organic soil', 'Kerala, Karnataka, West Bengal');
+('Rice', 'Oryza sativa', 'June-July (Kharif), December-January (Rabi)', 'October-November (Kharif), April-May (Rabi)', 120, 'Clay/Loamy', '20-35°C', '1200-1500mm', 'Land preparation, nursery raising, transplanting, weeding, fertilization, pest control, harvesting', 'Flooded fields, warm and humid climate, pH 5.5-6.5', 'India, Southeast Asia'),
+('Wheat', 'Triticum aestivum', 'October-November (Rabi), March-April (Summer)', 'March-April (Rabi), June-July (Summer)', 120, 'Loamy', '15-20°C', '450-650mm', 'Seed bed preparation, sowing, irrigation, fertilization, pest control, harvesting', 'Well-drained soil, cool climate during growth, warm during grain filling', 'North India, Temperate regions'),
+('Maize', 'Zea mays', 'June-July (Kharif), February-March (Rabi)', 'September-October (Kharif), May-June (Rabi)', 90, 'Well-drained Loamy', '20-30°C', '500-800mm', 'Land preparation, sowing, thinning, fertilization, irrigation, pest control, harvesting', 'Sunny weather, adequate moisture, pH 6.0-7.0', 'All India, Tropical/Subtropical'),
+('Cotton', 'Gossypium spp.', 'April-May (Kharif), August-September (Summer)', 'November-December (Kharif), January-February (Summer)', 150, 'Black/Red soil', '25-35°C', '600-1000mm', 'Seed treatment, sowing, thinning, fertilization, pest management, defoliation, harvesting', 'Warm climate, well-drained soil, adequate sunlight', 'Maharashtra, Gujarat, Andhra Pradesh'),
+('Sugarcane', 'Saccharum officinarum', 'February-March (Spring), September-October (Autumn)', 'December-March (Spring), July-November (Autumn)', 300, 'Deep fertile soil', '20-35°C', '1500-2500mm', 'Land preparation, sett treatment, planting, earthing up, fertilization, irrigation, harvesting', 'Fertile soil, adequate water, tropical climate', 'Uttar Pradesh, Maharashtra, Karnataka'),
+('Potatoes', 'Solanum tuberosum', 'September-October (Autumn), January-February (Spring)', 'January-February (Autumn), April-May (Spring)', 90, 'Sandy Loam', '15-20°C', '500-700mm', 'Seed treatment, ridge making, planting, earthing up, fertilization, irrigation, harvesting', 'Cool climate, loose soil, adequate moisture', 'Hills of North India, West Bengal'),
+('Tomatoes', 'Solanum lycopersicum', 'June-July (Kharif), December-January (Rabi)', 'October-November (Kharif), March-April (Rabi)', 120, 'Well-drained Loamy', '20-25°C', '600-800mm', 'Nursery raising, transplanting, staking, fertilization, pest control, harvesting', 'Warm climate, well-drained soil, full sunlight', 'All India, Protected cultivation'),
+('Onions', 'Allium cepa', 'September-October (Kharif), January-February (Rabi)', 'January-February (Kharif), April-May (Rabi)', 120, 'Fertile Loamy', '15-25°C', '400-600mm', 'Seed treatment, sowing/transplanting, thinning, fertilization, irrigation, harvesting', 'Mild climate, fertile soil, good drainage', 'Maharashtra, Karnataka, Tamil Nadu'),
+('Chillies', 'Capsicum annuum', 'January-February (Rabi), June-July (Kharif)', 'April-May (Rabi), September-October (Kharif)', 150, 'Well-drained Loamy', '20-30°C', '600-800mm', 'Nursery raising, transplanting, fertilization, pest control, harvesting', 'Warm climate, adequate moisture, full sunlight', 'Andhra Pradesh, Karnataka, West Bengal'),
+('Groundnut', 'Arachis hypogaea', 'June-July (Kharif), January-February (Rabi)', 'September-October (Kharif), April-May (Rabi)', 120, 'Sandy Loam', '25-30°C', '500-700mm', 'Seed treatment, sowing, fertilization, weed control, pest management, harvesting', 'Warm climate, well-drained sandy soil', 'Gujarat, Andhra Pradesh, Tamil Nadu'),
+('Soybean', 'Glycine max', 'June-July (Kharif), February-March (Spring)', 'October-November (Kharif), May-June (Spring)', 100, 'Well-drained Loamy', '20-30°C', '600-800mm', 'Seed treatment, sowing, fertilization, irrigation, pest control, harvesting', 'Warm humid climate, well-drained soil', 'Madhya Pradesh, Maharashtra, Rajasthan'),
+('Turmeric', 'Curcuma longa', 'April-May (Summer), August-September (Kharif)', 'January-March (Summer), January-March (Kharif)', 240, 'Rich Loamy', '20-30°C', '1500-2000mm', 'Rhizome treatment, planting, mulching, fertilization, irrigation, harvesting', 'Humid climate, partial shade, rich organic soil', 'Andhra Pradesh, Odisha, West Bengal'),
+('Ginger', 'Zingiber officinale', 'March-April (Summer), August-September (Kharif)', 'December-February (Summer), December-February (Kharif)', 240, 'Rich Loamy', '20-30°C', '1500-2000mm', 'Rhizome treatment, planting, mulching, fertilization, irrigation, harvesting', 'Humid climate, partial shade, rich organic soil', 'Kerala, Karnataka, West Bengal');
 
 -- Crops table (for admin management)
 CREATE TABLE IF NOT EXISTS crops (
@@ -257,7 +257,7 @@ CREATE TABLE IF NOT EXISTS admin (
 
 -- Insert default admin user
 INSERT INTO admin (username, password, email, role) VALUES
-('admin', '', 'admin@ecofarm.com', 'admin');
+('admin', '$2b$10$8K3VzJcQX8zJcQX8zJcQX8zJcQX8zJcQX8zJcQX8zJcQX8zJcQX8', 'admin@ecofarm.com', 'admin');
 
 -- Chatbot table
 CREATE TABLE IF NOT EXISTS chatbot_conversations (

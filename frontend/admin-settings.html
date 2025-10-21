@@ -23,40 +23,161 @@
 					<li class="nav-item"><a href="admin-dashboard.html"><i class="fas fa-th-large"></i><span>Dashboard</span></a></li>
 					<li class="nav-item"><a href="admin-users.html"><i class="fas fa-users"></i><span>User Management</span></a></li>
 					<li class="nav-item"><a href="admin-content.html"><i class="fas fa-file-alt"></i><span>Content Management</span></a></li>
-					<li class="nav-item"><a href="admin-analytics.html"><i class="fas fa-chart-line"></i><span>Analytics</span></a></li>
-					<li class="nav-item active"><a href="admin-settings.html"><i class="fas fa-cog"></i><span>Settings</span></a></li>
+					<li class="nav-item"><a href="admin-settings.html"><i class="fas fa-cog"></i><span>Settings</span></a></li>
 					<li class="nav-item"><a href="admin-notifications.html"><i class="fas fa-bell"></i><span>Notifications</span></a></li>
 				</ul>
 			</nav>
 		</aside>
 		<main class="admin-main">
 			<header class="admin-header">
-				<h1>Settings</h1>
+				<div class="header-left">
+					<button class="sidebar-toggle">
+						<i class="fas fa-bars"></i>
+					</button>
+					<h1>Settings</h1>
+				</div>
+				<div class="header-right">
+					<div class="admin-profile">
+						<img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Admin Profile">
+						<div class="profile-info">
+							<span class="profile-name">Admin User</span>
+							<span class="profile-role">System Administrator</span>
+						</div>
+					</div>
+				</div>
 			</header>
 			<div class="admin-content">
 				<div class="settings-section">
-					<h2>Admin Profile</h2>
-					<form id="adminProfileForm">
-						<label for="adminName">Name:</label>
-						<input type="text" id="adminName" value="Admin User" required>
-						<label for="adminEmail">Email:</label>
-						<input type="email" id="adminEmail" value="admin@ecofarm.com" required>
-						<button type="submit" class="btn btn-primary">Update Profile</button>
-					</form>
-				</div>
-				<div class="settings-section">
-					<h2>Site Settings</h2>
-					<form id="siteSettingsForm">
-						<label for="siteName">Site Name:</label>
-						<input type="text" id="siteName" value="Eco-Farm Manager" required>
-						<label for="supportEmail">Support Email:</label>
-						<input type="email" id="supportEmail" value="support@ecofarm.com" required>
-						<button type="submit" class="btn btn-primary">Save Settings</button>
-					</form>
+					<h2>System Settings</h2>
+					<div id="settingsContainer">
+						<!-- Settings will be loaded here -->
+						<div class="loading">Loading settings...</div>
+					</div>
 				</div>
 			</div>
 		</main>
 	</div>
 	<script src="admin.js"></script>
-</body>
-</html>
+	<script>
+		// Load settings
+		async function loadSettings() {
+			try {
+				const response = await fetch('http://localhost:5000/api/admin/settings', {
+					headers: { 'x-admin-auth': 'true' }
+				});
+				const settings = await response.json();
+				
+				const container = document.getElementById('settingsContainer');
+				container.innerHTML = '';
+				
+				// Group settings by category
+				const categories = {};
+				settings.forEach(setting => {
+					if (!categories[setting.category]) {
+						categories[setting.category] = [];
+					}
+					categories[setting.category].push(setting);
+				});
+				
+				// Create forms for each category
+				Object.keys(categories).forEach(category => {
+					const section = document.createElement('div');
+					section.className = 'settings-section';
+					section.innerHTML = `<h3>${category.charAt(0).toUpperCase() + category.slice(1)} Settings</h3>`;
+					
+					const form = document.createElement('form');
+					form.className = 'settings-form';
+					
+					categories[category].forEach(setting => {
+						const formGroup = document.createElement('div');
+						formGroup.className = 'form-group';
+						
+						const label = document.createElement('label');
+						label.textContent = setting.description || setting.setting_key.replace(/_/g, ' ');
+						
+						let input;
+						if (setting.setting_type === 'boolean') {
+							input = document.createElement('input');
+							input.type = 'checkbox';
+							input.checked = setting.setting_value === 'true';
+						} else if (setting.setting_type === 'number') {
+							input = document.createElement('input');
+							input.type = 'number';
+							input.value = setting.setting_value;
+						} else if (setting.setting_type === 'email') {
+							input = document.createElement('input');
+							input.type = 'email';
+							input.value = setting.setting_value;
+						} else {
+							input = document.createElement('input');
+							input.type = 'text';
+							input.value = setting.setting_value;
+						}
+						
+						input.dataset.settingId = setting.id;
+						input.dataset.settingType = setting.setting_type;
+						
+						formGroup.appendChild(label);
+						formGroup.appendChild(input);
+						form.appendChild(formGroup);
+					});
+					
+					const saveBtn = document.createElement('button');
+					saveBtn.type = 'submit';
+					saveBtn.className = 'btn btn-primary';
+					saveBtn.textContent = 'Save Changes';
+					form.appendChild(saveBtn);
+					
+					form.addEventListener('submit', async (e) => {
+						e.preventDefault();
+						await saveSettings(form);
+					});
+					
+					section.appendChild(form);
+					container.appendChild(section);
+				});
+				
+			} catch (error) {
+				console.error('Error loading settings:', error);
+				document.getElementById('settingsContainer').innerHTML = '<div class="error">Error loading settings</div>';
+			}
+		}
+		
+		// Save settings
+		async function saveSettings(form) {
+			const inputs = form.querySelectorAll('input');
+			const updates = [];
+			
+			inputs.forEach(input => {
+				let value = input.value;
+				if (input.type === 'checkbox') {
+					value = input.checked ? 'true' : 'false';
+				}
+				
+				updates.push({
+					id: input.dataset.settingId,
+					value: value
+				});
+			});
+			
+			try {
+				for (const update of updates) {
+					await fetch(`http://localhost:5000/api/admin/settings/${update.id}`, {
+						method: 'PUT',
+						headers: { 
+							'Content-Type': 'application/json',
+							'x-admin-auth': 'true'
+						},
+						body: JSON.stringify({ setting_value: update.value })
+					});
+				}
+				
+				alert('Settings saved successfully!');
+			} catch (error) {
+				console.error('Error saving settings:', error);
+				alert('Error saving settings');
+			}
+		}
+		
+		document.addEventListener('DOMContentLoaded', loadSettings);
+	</script>

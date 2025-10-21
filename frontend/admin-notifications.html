@@ -23,7 +23,6 @@
 					<li class="nav-item"><a href="admin-dashboard.html"><i class="fas fa-th-large"></i><span>Dashboard</span></a></li>
 					<li class="nav-item"><a href="admin-users.html"><i class="fas fa-users"></i><span>User Management</span></a></li>
 					<li class="nav-item"><a href="admin-content.html"><i class="fas fa-file-alt"></i><span>Content Management</span></a></li>
-					<li class="nav-item"><a href="admin-analytics.html"><i class="fas fa-chart-line"></i><span>Analytics</span></a></li>
 					<li class="nav-item"><a href="admin-settings.html"><i class="fas fa-cog"></i><span>Settings</span></a></li>
 					<li class="nav-item active"><a href="admin-notifications.html"><i class="fas fa-bell"></i><span>Notifications</span></a></li>
 				</ul>
@@ -31,7 +30,21 @@
 		</aside>
 		<main class="admin-main">
 			<header class="admin-header">
-				<h1>Notifications</h1>
+				<div class="header-left">
+					<button class="sidebar-toggle">
+						<i class="fas fa-bars"></i>
+					</button>
+					<h1>Notifications</h1>
+				</div>
+				<div class="header-right">
+					<div class="admin-profile">
+						<img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Admin Profile">
+						<div class="profile-info">
+							<span class="profile-name">Admin User</span>
+							<span class="profile-role">System Administrator</span>
+						</div>
+					</div>
+				</div>
 			</header>
 			<div class="admin-content">
 				<div class="notification-send">
@@ -68,11 +81,26 @@
 				const alerts = await response.json();
 				const ul = document.getElementById('alertsList');
 				ul.innerHTML = alerts.map(alert => `
-					<li><strong>${alert.title}:</strong> ${alert.message} <span class="date">${new Date(alert.created_at).toLocaleDateString()}</span></li>
+					<li class="alert-item ${alert.type || 'info'}">
+						<strong>${alert.title}:</strong> ${alert.message || ''} 
+						<span class="date">${new Date(alert.created_at).toLocaleDateString()}</span>
+						<span class="status">${alert.status || 'new'}</span>
+					</li>
 				`).join('');
+				
+				// Update badge count
+				const unreadCount = alerts.filter(alert => alert.status === 'new').length;
+				updateBadgeCount(unreadCount);
 			} catch (error) {
 				console.error('Error loading alerts:', error);
 			}
+		// Update badge count
+		function updateBadgeCount(count) {
+			const badges = document.querySelectorAll('.badge');
+			badges.forEach(badge => {
+				badge.textContent = count;
+				badge.style.display = count > 0 ? 'inline' : 'none';
+			});
 		}
 
 		// Send notification
@@ -95,8 +123,9 @@
 				alert('Error sending notification');
 			}
 		});
-
-		document.addEventListener('DOMContentLoaded', loadAlerts);
+	}
+	document.addEventListener('DOMContentLoaded', loadAlerts);
 	</script>
 </body>
 </html>
+	

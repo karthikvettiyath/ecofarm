@@ -32,10 +32,6 @@
 
 		<main class="main-content">
 			<header class="top-bar">
-				<div class="search-box">
-					<input type="text" placeholder="Search crop recommendations...">
-					<i class="fas fa-search"></i>
-				</div>
 				<div class="user-info">
 					<img src="https://ui-avatars.com/api/?name=Farmer+User&background=4caf50&color=fff" alt="User">
 					<span>Welcome, Farmer!</span>
@@ -96,7 +92,6 @@
 			const cropForm = document.getElementById('cropForm');
 			const recommendationsContent = document.querySelector('.recommendations-content');
 			const cropDetails = document.getElementById('cropDetails');
-			const searchInput = document.querySelector('.search-box input');
 			let allCrops = [];
 
 			cropForm.addEventListener('submit', function(e) {
@@ -129,14 +124,6 @@
 						`;
 						cropDetails.innerHTML = '';
 					});
-			});
-
-			searchInput.addEventListener('input', function() {
-				const term = searchInput.value.trim().toLowerCase();
-				if (allCrops.length > 0) {
-					const filtered = allCrops.filter(c => c.recommended_crop.toLowerCase().includes(term));
-					renderRecommendations(filtered);
-				}
 			});
 
 			function renderRecommendations(data) {

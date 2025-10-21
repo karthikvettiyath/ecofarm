@@ -32,10 +32,6 @@
 
         <main class="main-content">
             <header class="top-bar">
-                <div class="search-box">
-                    <input type="text" placeholder="Search crops...">
-                    <i class="fas fa-search"></i>
-                </div>
                 <div class="user-info">
                     <img src="https://ui-avatars.com/api/?name=Farmer+User&background=4caf50&color=fff" alt="User">
                     <span>Welcome, Farmer!</span>
@@ -137,13 +133,6 @@
             // Filter functionality
             document.getElementById('seasonFilter').addEventListener('change', filterCrops);
             document.getElementById('regionFilter').addEventListener('change', filterCrops);
-
-            // Search functionality
-            const searchInput = document.querySelector('.search-box input');
-            searchInput.addEventListener('input', function() {
-                const query = this.value.toLowerCase();
-                filterCropsBySearch(query);
-            });
         });
 
         function loadCropCalendar() {
@@ -212,15 +201,6 @@
                 .catch(error => {
                     console.error('Error filtering crops:', error);
                 });
-        }
-
-        function filterCropsBySearch(query) {
-            const rows = document.querySelectorAll('#cropCalendarBody tr');
-
-            rows.forEach(row => {
-                const text = row.textContent.toLowerCase();
-                row.style.display = text.includes(query) ? '' : 'none';
-            });
         }
 
         function showCropDetails(cropId) {
